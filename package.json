@@ -2,6 +2,11 @@
   "name": "contract-management-dashboard",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "José Vinícius de Moraes",
+    "email": "moraesjosev@gmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -26,6 +31,7 @@
     ]
   },
   "dependencies": {
+    "@next/env": "^15.1.6",
     "axios": "^1.7.9",
     "moment": "^2.30.1",
     "next": "15.1.6",
