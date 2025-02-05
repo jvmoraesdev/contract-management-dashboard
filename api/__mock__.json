@@ -1,0 +1,190 @@
+{
+  "contracts": [
+    {
+      "id": "CT-001",
+      "name": "Manutenção TI",
+      "clientOrSupplier": "ABC Ltda.",
+      "startDate": "2023-01-15",
+      "endDate": "2025-01-15",
+      "status": 1,
+      "value": 150000.0,
+      "type": 1
+    },
+    {
+      "id": "CT-002",
+      "name": "Fornecimento Materiais",
+      "clientOrSupplier": "XYZ S.A.",
+      "startDate": "2022-06-10",
+      "endDate": "2024-06-10",
+      "status": 2,
+      "value": 200000.0,
+      "type": 2
+    },
+    {
+      "id": "CT-003",
+      "name": "Consultoria Financeira",
+      "clientOrSupplier": "123 Consulting",
+      "startDate": "2023-09-01",
+      "endDate": "2024-09-01",
+      "status": 3,
+      "value": 100000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-004",
+      "name": "Desenvolvimento Web",
+      "clientOrSupplier": "Empresa Beta",
+      "startDate": "2024-02-20",
+      "endDate": "2026-02-20",
+      "status": 1,
+      "value": 300000.0,
+      "type": 1
+    },
+    {
+      "id": "CT-005",
+      "name": "Suporte Técnico",
+      "clientOrSupplier": "Fornecedor Z",
+      "startDate": "2023-07-01",
+      "endDate": "2024-07-01",
+      "status": 4,
+      "value": 80000.0,
+      "type": 2
+    },
+    {
+      "id": "CT-006",
+      "name": "Software ERP",
+      "clientOrSupplier": "Tech Solutions",
+      "startDate": "2022-12-10",
+      "endDate": "2024-12-10",
+      "status": 1,
+      "value": 250000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-007",
+      "name": "Consultoria RH",
+      "clientOrSupplier": "Alpha Corp.",
+      "startDate": "2023-05-05",
+      "endDate": "2025-05-05",
+      "status": 1,
+      "value": 175000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-008",
+      "name": "Treinamento TI",
+      "clientOrSupplier": "Delta Group",
+      "startDate": "2023-08-15",
+      "endDate": "2024-08-15",
+      "status": 4,
+      "value": 90000.0,
+      "type": 1
+    },
+    {
+      "id": "CT-009",
+      "name": "Segurança Digital",
+      "clientOrSupplier": "Beta Tech",
+      "startDate": "2023-11-25",
+      "endDate": "2025-11-25",
+      "status": 1,
+      "value": 120000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-010",
+      "name": "Logística e Transporte",
+      "clientOrSupplier": "Global Partners",
+      "startDate": "2021-09-30",
+      "endDate": "2023-09-30",
+      "status": 2,
+      "value": 210000.0,
+      "type": 2
+    },
+    {
+      "id": "CT-011",
+      "name": "Auditoria Fiscal",
+      "clientOrSupplier": "Compliance Corp",
+      "startDate": "2023-04-20",
+      "endDate": "2024-04-20",
+      "status": 4,
+      "value": 95000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-012",
+      "name": "Infraestrutura Cloud",
+      "clientOrSupplier": "CloudTech Ltda.",
+      "startDate": "2023-06-15",
+      "endDate": "2025-06-15",
+      "status": 1,
+      "value": 320000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-013",
+      "name": "Fornecimento de Hardware",
+      "clientOrSupplier": "Hardware Solutions",
+      "startDate": "2022-10-01",
+      "endDate": "2024-10-01",
+      "status": 3,
+      "value": 180000.0,
+      "type": 2
+    },
+    {
+      "id": "CT-014",
+      "name": "Consultoria Estratégica",
+      "clientOrSupplier": "Strategy Experts",
+      "startDate": "2023-12-10",
+      "endDate": "2026-12-10",
+      "status": 1,
+      "value": 400000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-015",
+      "name": "Manutenção Predial",
+      "clientOrSupplier": "BuildTech",
+      "startDate": "2023-02-15",
+      "endDate": "2024-02-15",
+      "status": 2,
+      "value": 220000.0,
+      "type": 1
+    }
+  ],
+  "status": [
+    {
+      "id": 1,
+      "name": "Ativo"
+    },
+    {
+      "id": 2,
+      "name": "Expirado"
+    },
+    {
+      "id": 3,
+      "name": "Pendente de Renovação"
+    },
+    {
+      "id": 4,
+      "name": "Próximo ao Vencimento"
+    }
+  ],
+  "types": [
+    {
+      "id": 1,
+      "name": "Serviço"
+    },
+    {
+      "id": 2,
+      "name": "Fornecimento"
+    },
+    {
+      "id": 3,
+      "name": "Consultoria"
+    },
+    {
+      "id": 4,
+      "name": "TI"
+    }
+  ]
+}
