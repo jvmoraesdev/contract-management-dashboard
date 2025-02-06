@@ -10,8 +10,11 @@ export const Header = ({ children }: ChildrenProps) => {
 
   return (
     <div className="flex items-center justify-between">
-      <button onClick={toggleSidebar} className="-ml-2 mr-2 rounded-md p-2 hover:bg-accent">
-        <Menu className="h-6 w-6 md:hidden" />
+      <button
+        onClick={toggleSidebar}
+        className="-ml-2 mr-2 rounded-md p-2 hover:bg-accent md:hidden"
+      >
+        <Menu className="h-6 w-6" />
       </button>
 
       <h1 className="text-2xl font-bold">{`${!isMobile ? 'Contract Management ' : ''}Dashboard`}</h1>
