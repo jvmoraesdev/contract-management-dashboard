@@ -3,7 +3,7 @@
 import AddContractDialog from '@/components/shared/AddContractDialog';
 import ChartsSection from '@/components/shared/Charts/ChartsSelection';
 import ContractsTable from '@/components/shared/Table/ContractsTable';
-import MetricsGrid from '@/components/shared/MetricsGrid';
+import MetricsGrid from '@/components/shared/MetrictsGrid.tsx/MetricsGrid';
 import { SideBar } from '@/components/shared/SideBar';
 import { useSidebar } from '@/components/ui/sidebar';
 import {
