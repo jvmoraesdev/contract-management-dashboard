@@ -2,7 +2,7 @@
 
 import AddContractDialog from '@/components/shared/AddContractDialog';
 import ChartsSection from '@/components/shared/Charts/ChartsSelection';
-import ContractsTable from '@/components/shared/ContractsTable';
+import ContractsTable from '@/components/shared/Table/ContractsTable';
 import MetricsGrid from '@/components/shared/MetricsGrid';
 import { SideBar } from '@/components/shared/SideBar';
 import { useSidebar } from '@/components/ui/sidebar';
