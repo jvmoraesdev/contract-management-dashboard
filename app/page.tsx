@@ -7,6 +7,7 @@ import MetricsGrid from '@/components/shared/MetricsGrid';
 import { SideBar } from '@/components/shared/SideBar';
 import { useSidebar } from '@/components/ui/sidebar';
 import {
+  createContract,
   getAllContracts,
   getAllContractsStatus,
   getAllContractsTypes
@@ -18,7 +19,7 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 
 export default function Home() {
-  const { setContracts, setStatus, setType } = useContracts();
+  const { contracts, setContracts, setStatus, setType } = useContracts();
 
   useEffect(() => {
     getAllContracts().then((data) => {
@@ -55,7 +56,9 @@ export default function Home() {
               open={showAddContract}
               onOpenChange={setShowAddContract}
               onSubmit={(data) => {
-                console.log('New contract data:', data);
+                createContract(data).then((res) => {
+                  setContracts([...contracts, res]);
+                });
                 setShowAddContract(false);
               }}
             />

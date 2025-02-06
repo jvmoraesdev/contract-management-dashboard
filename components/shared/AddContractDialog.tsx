@@ -19,96 +19,117 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import DatePickerWithRange from '@/components/ui/date-picker-with-range';
 import { addDays } from 'date-fns';
+import { Plus } from 'lucide-react';
+import useMobile from '@/stores/hooks/useMobile';
+import { Contract } from '@/interfaces/contracts.interface';
+import useContracts from '@/stores/hooks/useContracts';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { cn } from '@/lib/utils';
 
 interface AddContractDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onSubmit?: (data: ContractFormData) => void;
+  onSubmit?: (data: Contract) => void;
 }
 
-interface ContractFormData {
-  contractName: string;
-  contractType: string;
-  startDate: Date;
-  endDate: Date;
-  value: string;
-  description: string;
-  status: string;
-}
+const formSchema = z.object({
+  name: z.string().min(1, 'Nome do contrato é obrigatório'),
+  type: z.number().min(0, 'Tipo de contrato é obrigatório'),
+  startDate: z.date(),
+  endDate: z.date(),
+  value: z.number().min(0.01, 'Valor do contrato é obrigatório'),
+  status: z.number().min(0, 'Status é obrigatório'),
+  clientOrSupplier: z.string().min(1, 'Cliente/Fornecedor é obrigatório')
+});
 
 const AddContractDialog: React.FC<AddContractDialogProps> = ({
   open = true,
   onOpenChange = () => {},
   onSubmit = () => {}
 }) => {
-  const [formData, setFormData] = React.useState<ContractFormData>({
-    contractName: '',
-    contractType: '',
-    startDate: new Date(),
-    endDate: addDays(new Date(), 30),
-    value: '',
-    description: '',
-    status: 'draft'
+  const { status, type } = useContracts();
+  const { isMobile } = useMobile();
+
+  const form = useForm<Contract>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      type: 1,
+      startDate: new Date(),
+      endDate: addDays(new Date(), 30),
+      value: 0,
+      status: 1,
+      clientOrSupplier: ''
+    }
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
+  const handleSubmit = (data: Contract) => {
+    onSubmit(data);
+    form.reset();
+    onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add New Contract</Button>
+        <Button variant="outline">
+          {isMobile ? <Plus strokeWidth="3px" /> : 'Add New Contract'}
+        </Button>
       </DialogTrigger>
       <DialogContent className="bg-white dark:bg-gray-800 sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>Add New Contract</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="contractName">Contract Name</Label>
+              <Label htmlFor="name">Contract Name</Label>
               <Input
-                id="contractName"
+                id="name"
                 placeholder="Enter contract name"
-                value={formData.contractName}
-                onChange={(e) => setFormData({ ...formData, contractName: e.target.value })}
+                {...form.register('name')}
+                className={cn(form.formState.errors.name && 'border-red-500')}
               />
+              {form.formState.errors.name && (
+                <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+              )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="contractType">Contract Type</Label>
+              <Label htmlFor="type">Contract Type</Label>
               <Select
-                value={formData.contractType}
-                onValueChange={(value) => setFormData({ ...formData, contractType: value })}
+                value={form.getValues('type').toString()}
+                onValueChange={(value) => form.setValue('type', Number(value))}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="service">Service Agreement</SelectItem>
-                  <SelectItem value="license">License Agreement</SelectItem>
-                  <SelectItem value="purchase">Purchase Agreement</SelectItem>
+                  {type.map((selectedType) => (
+                    <SelectItem key={selectedType.id} value={selectedType.id.toString()}>
+                      {selectedType.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
+              {form.formState.errors.type && (
+                <p className="text-sm text-red-500">{form.formState.errors.type.message}</p>
+              )}
             </div>
           </div>
 
           <div className="space-y-2">
             <Label>Contract Period</Label>
             <DatePickerWithRange
-              from={formData.startDate}
-              to={formData.endDate}
-              onSelect={(range) => {
+              from={form.getValues('startDate')}
+              to={form.getValues('endDate')}
+              onSelect={(range: { from: Date; to: Date }) => {
                 if (range?.from && range?.to) {
-                  setFormData({
-                    ...formData,
-                    startDate: range.from,
-                    endDate: range.to
-                  });
+                  form.setValue('startDate', range.from);
+                  form.setValue('endDate', range.to);
                 }
               }}
             />
@@ -120,36 +141,49 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
               id="value"
               placeholder="Enter contract value"
               type="number"
-              value={formData.value}
-              onChange={(e) => setFormData({ ...formData, value: e.target.value })}
+              {...form.register('value', { valueAsNumber: true })}
+              className={cn(form.formState.errors.value && 'border-red-500')}
             />
+            {form.formState.errors.value && (
+              <p className="text-sm text-red-500">{form.formState.errors.value.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              placeholder="Enter contract description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            <Label htmlFor="clientOrSupplier">Client/Supplier</Label>
+            <Input
+              id="clientOrSupplier"
+              placeholder="Enter client or supplier name"
+              {...form.register('clientOrSupplier')}
+              className={cn(form.formState.errors.clientOrSupplier && 'border-red-500')}
             />
+            {form.formState.errors.clientOrSupplier && (
+              <p className="text-sm text-red-500">
+                {form.formState.errors.clientOrSupplier.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="status">Status</Label>
             <Select
-              value={formData.status}
-              onValueChange={(value) => setFormData({ ...formData, status: value })}
+              value={form.getValues('status').toString()}
+              onValueChange={(value) => form.setValue('status', Number(value))}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
+                {status.map((selectedStatus) => (
+                  <SelectItem key={selectedStatus.id} value={selectedStatus.id.toString()}>
+                    {selectedStatus.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
+            {form.formState.errors.status && (
+              <p className="text-sm text-red-500">{form.formState.errors.status.message}</p>
+            )}
           </div>
 
           <DialogFooter>
