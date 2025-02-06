@@ -47,8 +47,6 @@ export const getMetrics = (contracts: ContractWithId[]) => {
   const activeValue = calculateActiveContractsValue(contracts);
   const growth = calculateContractsGrowth(contracts);
 
-  console.log(totalValue);
-
   return {
     totalContracts: contracts.length,
     activeContracts: contracts.filter((contract) => contract.status === 1).length,

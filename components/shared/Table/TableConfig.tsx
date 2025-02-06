@@ -32,6 +32,7 @@ export const getColumns = ({
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          className="w-full justify-center"
         >
           ID
           {{
@@ -40,7 +41,8 @@ export const getColumns = ({
           }[column.getIsSorted() as string] ?? <ChevronsUpDown className="ml-2 h-4 w-4" />}
         </Button>
       );
-    }
+    },
+    cell: ({ row }) => <div className="text-center">{row.getValue('id')}</div>
   },
   {
     accessorKey: 'name',
@@ -85,7 +87,7 @@ export const getColumns = ({
       return (
         <span
           className={cn(
-            'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',
+            'bg-white-100 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-black',
             styleClass
           )}
         >

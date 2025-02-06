@@ -82,8 +82,6 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
         startDate: new Date(contract.startDate),
         endDate: new Date(contract.endDate)
       });
-
-      console.log('>>>>>>', new Date(contract.startDate));
     } else {
       form.reset({
         id: '',
