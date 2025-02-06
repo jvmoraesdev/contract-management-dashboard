@@ -78,15 +78,12 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
   useEffect(() => {
     if (contract) {
       form.reset({
-        id: contract.id,
-        name: contract.name,
-        type: contract.type,
+        ...contract,
         startDate: new Date(contract.startDate),
-        endDate: new Date(contract.endDate),
-        value: contract.value,
-        status: contract.status,
-        clientOrSupplier: contract.clientOrSupplier
+        endDate: new Date(contract.endDate)
       });
+
+      console.log('>>>>>>', new Date(contract.startDate));
     } else {
       form.reset({
         id: '',
@@ -178,15 +175,22 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           <div className="space-y-2">
             <Label>Contract Period</Label>
             <DatePickerWithRange
-              from={form.getValues('startDate')}
-              to={form.getValues('endDate')}
-              onSelect={(range: { from: Date; to: Date }) => {
-                if (range?.from && range?.to) {
-                  form.setValue('startDate', range.from);
-                  form.setValue('endDate', range.to);
+              from={form.watch('startDate')}
+              to={form.watch('endDate')}
+              onSelect={(range) => {
+                if (range?.from) {
+                  form.setValue('startDate', range.from, { shouldDirty: true });
+                }
+                if (range?.to) {
+                  form.setValue('endDate', range.to, { shouldDirty: true });
                 }
               }}
+              isModified={isFieldModified('startDate') || isFieldModified('endDate')}
+              hasError={!!form.formState.errors.startDate || !!form.formState.errors.endDate}
             />
+            {(form.formState.errors.startDate || form.formState.errors.endDate) && (
+              <p className="text-sm text-red-500">Data inválida</p>
+            )}
           </div>
 
           <div className="space-y-2">

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { addDays, format } from 'date-fns';
+import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 
@@ -10,11 +10,37 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-export default function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivElement>) {
+interface DatePickerWithRangeProps {
+  className?: string;
+  from?: Date;
+  to?: Date;
+  onSelect?: (date: DateRange | undefined) => void;
+  isModified?: boolean;
+  hasError?: boolean;
+}
+
+export default function DatePickerWithRange({
+  className,
+  from,
+  to,
+  onSelect,
+  isModified,
+  hasError
+}: DatePickerWithRangeProps) {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20)
+    from: from,
+    to: to
   });
+
+  // Atualiza o estado local quando as props mudam
+  React.useEffect(() => {
+    setDate({ from, to });
+  }, [from, to]);
+
+  const handleSelect = (newDate: DateRange | undefined) => {
+    setDate(newDate);
+    onSelect?.(newDate);
+  };
 
   return (
     <div className={cn('grid gap-2', className)}>
@@ -25,10 +51,12 @@ export default function DatePickerWithRange({ className }: React.HTMLAttributes<
             variant={'outline'}
             className={cn(
               'w-[300px] justify-start text-left font-normal',
-              !date && 'text-muted-foreground'
+              !date && 'text-muted-foreground',
+              isModified && 'border-yellow-500',
+              hasError && 'border-red-500'
             )}
           >
-            <CalendarIcon />
+            <CalendarIcon className="mr-2 h-4 w-4" />
             {date?.from ? (
               date.to ? (
                 <>
@@ -48,7 +76,7 @@ export default function DatePickerWithRange({ className }: React.HTMLAttributes<
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={handleSelect}
             numberOfMonths={2}
           />
         </PopoverContent>
