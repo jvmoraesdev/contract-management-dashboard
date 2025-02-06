@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -23,20 +23,22 @@ import DatePickerWithRange from '@/components/ui/date-picker-with-range';
 import { addDays } from 'date-fns';
 import { Plus } from 'lucide-react';
 import useMobile from '@/stores/hooks/useMobile';
-import { Contract } from '@/interfaces/contracts.interface';
+import { Contract, ContractWithId } from '@/interfaces/contracts.interface';
 import useContracts from '@/stores/hooks/useContracts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { cn } from '@/lib/utils';
 
-interface AddContractDialogProps {
+interface ContractDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onSubmit?: (data: Contract) => void;
+  onSubmit?: (data: Contract | ContractWithId) => void;
+  contract?: ContractWithId;
 }
 
 const formSchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, 'Nome do contrato é obrigatório'),
   type: z.number().min(0, 'Tipo de contrato é obrigatório'),
   startDate: z.date(),
@@ -46,45 +48,87 @@ const formSchema = z.object({
   clientOrSupplier: z.string().min(1, 'Cliente/Fornecedor é obrigatório')
 });
 
-const AddContractDialog: React.FC<AddContractDialogProps> = ({
-  open = true,
+const ContractDialog: React.FC<ContractDialogProps> = ({
+  open = false,
   onOpenChange = () => {},
-  onSubmit = () => {}
+  onSubmit = () => {},
+  contract
 }) => {
   const { status, type } = useContracts();
   const { isMobile } = useMobile();
+  const isEditing = !!contract;
 
-  const form = useForm<Contract>({
+  const form = useForm<Contract | ContractWithId>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      type: 1,
-      startDate: new Date(),
-      endDate: addDays(new Date(), 30),
-      value: 0,
-      status: 1,
-      clientOrSupplier: ''
+      id: contract?.id || '',
+      name: contract?.name || '',
+      type: contract?.type || 1,
+      startDate: contract?.startDate || new Date(),
+      endDate: contract?.endDate || addDays(new Date(), 30),
+      value: contract?.value || 0,
+      status: contract?.status || 1,
+      clientOrSupplier: contract?.clientOrSupplier || ''
     }
   });
 
-  const handleSubmit = (data: Contract) => {
+  const watchedType = form.watch('type');
+  const watchedStatus = form.watch('status');
+
+  useEffect(() => {
+    if (contract) {
+      form.reset({
+        id: contract.id,
+        name: contract.name,
+        type: contract.type,
+        startDate: new Date(contract.startDate),
+        endDate: new Date(contract.endDate),
+        value: contract.value,
+        status: contract.status,
+        clientOrSupplier: contract.clientOrSupplier
+      });
+    } else {
+      form.reset({
+        id: '',
+        name: '',
+        type: 1,
+        startDate: new Date(),
+        endDate: addDays(new Date(), 30),
+        value: 0,
+        status: 1,
+        clientOrSupplier: ''
+      });
+    }
+  }, [contract, form]);
+
+  const handleSubmit = (data: Contract | ContractWithId) => {
     onSubmit(data);
     form.reset();
     onOpenChange(false);
+  };
+
+  const isFieldModified = (fieldName: string) => {
+    return isEditing && form.formState.dirtyFields[fieldName as keyof (Contract | ContractWithId)];
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button variant="outline">
-          {isMobile ? <Plus strokeWidth="3px" /> : 'Add New Contract'}
+          {isMobile ? <Plus strokeWidth="3px" /> : 'Adicionar Contrato'}
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-white dark:bg-gray-800 sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Add New Contract</DialogTitle>
+          <DialogTitle>{isEditing ? 'Editar Contrato' : 'Adicionar Contrato'}</DialogTitle>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          {isEditing && (
+            <div className="space-y-2">
+              <Label htmlFor="id">ID do Contrato</Label>
+              <Input id="id" {...form.register('id')} disabled className="bg-gray-100" />
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Contract Name</Label>
@@ -92,7 +136,10 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
                 id="name"
                 placeholder="Enter contract name"
                 {...form.register('name')}
-                className={cn(form.formState.errors.name && 'border-red-500')}
+                className={cn(
+                  isFieldModified('name') && 'border-yellow-500',
+                  form.formState.errors.name && 'border-red-500'
+                )}
               />
               {form.formState.errors.name && (
                 <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
@@ -101,10 +148,17 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
             <div className="space-y-2">
               <Label htmlFor="type">Contract Type</Label>
               <Select
-                value={form.getValues('type').toString()}
-                onValueChange={(value) => form.setValue('type', Number(value))}
+                value={watchedType?.toString()}
+                onValueChange={(value) =>
+                  form.setValue('type', Number(value), { shouldDirty: true })
+                }
               >
-                <SelectTrigger>
+                <SelectTrigger
+                  className={cn(
+                    isFieldModified('type') && 'border-yellow-500',
+                    form.formState.errors.type && 'border-red-500'
+                  )}
+                >
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -142,7 +196,10 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
               placeholder="Enter contract value"
               type="number"
               {...form.register('value', { valueAsNumber: true })}
-              className={cn(form.formState.errors.value && 'border-red-500')}
+              className={cn(
+                isFieldModified('value') && 'border-yellow-500',
+                form.formState.errors.value && 'border-red-500'
+              )}
             />
             {form.formState.errors.value && (
               <p className="text-sm text-red-500">{form.formState.errors.value.message}</p>
@@ -155,7 +212,10 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
               id="clientOrSupplier"
               placeholder="Enter client or supplier name"
               {...form.register('clientOrSupplier')}
-              className={cn(form.formState.errors.clientOrSupplier && 'border-red-500')}
+              className={cn(
+                isFieldModified('clientOrSupplier') && 'border-yellow-500',
+                form.formState.errors.clientOrSupplier && 'border-red-500'
+              )}
             />
             {form.formState.errors.clientOrSupplier && (
               <p className="text-sm text-red-500">
@@ -167,10 +227,17 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
           <div className="space-y-2">
             <Label htmlFor="status">Status</Label>
             <Select
-              value={form.getValues('status').toString()}
-              onValueChange={(value) => form.setValue('status', Number(value))}
+              value={watchedStatus?.toString()}
+              onValueChange={(value) =>
+                form.setValue('status', Number(value), { shouldDirty: true })
+              }
             >
-              <SelectTrigger>
+              <SelectTrigger
+                className={cn(
+                  isFieldModified('status') && 'border-yellow-500',
+                  form.formState.errors.status && 'border-red-500'
+                )}
+              >
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
@@ -188,9 +255,9 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Cancel
+              Cancelar
             </Button>
-            <Button type="submit">Add Contract</Button>
+            <Button type="submit">{isEditing ? 'Salvar Alterações' : 'Adicionar Contrato'}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -198,4 +265,4 @@ const AddContractDialog: React.FC<AddContractDialogProps> = ({
   );
 };
 
-export default AddContractDialog;
+export default ContractDialog;

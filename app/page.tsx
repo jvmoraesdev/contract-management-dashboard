@@ -10,13 +10,15 @@ import {
   createContract,
   getAllContracts,
   getAllContractsStatus,
-  getAllContractsTypes
+  getAllContractsTypes,
+  updateContract
 } from '@/services/contracts.service';
 import useContracts from '@/stores/hooks/useContracts';
 import useMobile from '@/stores/hooks/useMobile';
 import { Menu } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import { Contract, ContractWithId } from '@/interfaces/contracts.interface';
 
 export default function Home() {
   const { contracts, setContracts, setStatus, setType } = useContracts();
@@ -34,9 +36,26 @@ export default function Home() {
   }, []);
 
   const [showAddContract, setShowAddContract] = useState(false);
+  const [selectedContract, setSelectedContract] = useState<ContractWithId | undefined>();
 
   const { isMobile } = useMobile();
   const { toggleSidebar } = useSidebar();
+
+  const handleContractSubmit = async (data: Contract | ContractWithId) => {
+    try {
+      if ('id' in data && data.id) {
+        const updatedContract = await updateContract(data as ContractWithId);
+        setContracts(contracts.map((c) => (c.id === updatedContract.id ? updatedContract : c)));
+      } else {
+        const newContract = await createContract(data as Contract);
+        setContracts([...contracts, newContract]);
+      }
+      setShowAddContract(false);
+      setSelectedContract(undefined);
+    } catch (error) {
+      console.error('Erro ao salvar contrato:', error);
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -54,13 +73,12 @@ export default function Home() {
             <h1 className="text-2xl font-bold">{`${!isMobile ? 'Contract Management ' : 'C.M.'}Dashboard`}</h1>
             <AddContractDialog
               open={showAddContract}
-              onOpenChange={setShowAddContract}
-              onSubmit={(data) => {
-                createContract(data).then((res) => {
-                  setContracts([...contracts, res]);
-                });
-                setShowAddContract(false);
+              onOpenChange={(open) => {
+                setShowAddContract(open);
+                if (!open) setSelectedContract(undefined);
               }}
+              onSubmit={handleContractSubmit}
+              contract={selectedContract}
             />
           </div>
 
@@ -70,7 +88,8 @@ export default function Home() {
 
           <ContractsTable
             onEdit={(contract) => {
-              console.log('Edit contract:', contract);
+              setSelectedContract(contract);
+              setShowAddContract(true);
             }}
             onDelete={(contract) => {
               console.log('Delete contract:', contract);
