@@ -58,3 +58,19 @@ export function mapContractsToStatusData(
     value: statusMap.get(id) || 0
   }));
 }
+
+/**
+ * Mapeia contratos para dados de tipo.
+ */
+export function mapContractsToTypeData(contracts: ContractWithId[], types: Status[]): ChartData[] {
+  const typeMap = new Map<number, number>();
+
+  contracts.forEach((contract) => {
+    typeMap.set(contract.type, (typeMap.get(contract.type) || 0) + 1);
+  });
+
+  return types.map(({ id, name }) => ({
+    label: name,
+    value: typeMap.get(id) || 0
+  }));
+}

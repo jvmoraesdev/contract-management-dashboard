@@ -13,6 +13,8 @@ export interface ChartContainerProps extends ChildrenProps {
   title?: string;
   subtitle?: string;
   labelConfig: ChartLabelConfig;
+  className?: string;
+  action?: React.ReactNode;
 }
 
 export interface ChartData {
@@ -22,5 +24,7 @@ export interface ChartData {
 }
 
 export interface ChartDataProps {
-  chartData: ChartData[];
+  typeData?: ChartData[];
+  statusData?: ChartData[];
+  barsChartData?: ChartData[];
 }

@@ -3,11 +3,13 @@
 import { ChartCardContainer } from '@/components/shared/Charts/ChartCardContainer';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { ChartConfig, ChartTooltip, ChartTooltipContent } from '../../ui/chart';
-import React from 'react';
+import React, { useState } from 'react';
 import { ChartDataProps } from '@/interfaces/chats.interface';
 import useMobile from '@/stores/hooks/useMobile';
+import { Button } from '@/components/ui/button';
+import { RefreshCcwDot } from 'lucide-react';
 
-const pieChartConfig = {
+const statusPieChartConfig = {
   contracts: {
     label: 'Contracts'
   },
@@ -29,17 +31,53 @@ const pieChartConfig = {
   }
 } satisfies ChartConfig;
 
+const typesPieChartConfig = {
+  contracts: {
+    label: 'Contracts'
+  },
+  service: {
+    label: 'Serviço',
+    color: 'hsl(var(--chart-1))'
+  },
+  supply: {
+    label: 'Fornecimento',
+    color: 'hsl(var(--chart-2))'
+  },
+  consulting: {
+    label: 'Consultoria',
+    color: 'hsl(var(--chart-3))'
+  },
+  IT: {
+    label: 'TI',
+    color: 'hsl(var(--chart-4))'
+  }
+} satisfies ChartConfig;
+
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-export const ContractStatusChart: React.FC<ChartDataProps> = ({ chartData }) => {
+export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, typeData }) => {
+  const [chartType, setChartType] = useState<'status' | 'type'>('status');
   const { isMobile } = useMobile();
+
   return (
-    <ChartCardContainer title="Contract Status Control" labelConfig={pieChartConfig}>
+    <ChartCardContainer
+      title={chartType === 'status' ? 'Distribuição por Status' : 'Distribuição por Tipo'}
+      labelConfig={chartType === 'status' ? statusPieChartConfig : typesPieChartConfig}
+      action={
+        <Button
+          className="h-8 w-8"
+          variant="outline"
+          onClick={() => setChartType(chartType === 'status' ? 'type' : 'status')}
+        >
+          <RefreshCcwDot size={16} strokeWidth={2.0} />
+        </Button>
+      }
+    >
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
           <Pie
-            data={chartData}
+            data={chartType === 'status' ? statusData : typeData}
             cx="50%"
             cy="50%"
             dataKey="value"
@@ -50,9 +88,13 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ chartData }) => 
             labelLine={true}
             label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
           >
-            {chartData.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
+            {chartType === 'status'
+              ? statusData?.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))
+              : typeData?.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
           </Pie>
           <Legend
             layout={isMobile ? 'horizontal' : 'centric'}

@@ -3,20 +3,26 @@
 import { ContractExpirationChart } from './ContractExpirationChart';
 import React, { useEffect, useState } from 'react';
 import useContracts from '@/stores/hooks/useContracts';
-import { mapContractsToExpirationData, mapContractsToStatusData } from '@/utils/chartData';
+import {
+  mapContractsToExpirationData,
+  mapContractsToStatusData,
+  mapContractsToTypeData
+} from '@/utils/chartData';
 import { ChartData } from '@/interfaces/chats.interface';
 import { ContractStatusChart } from './ContractStatusChart';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function ChartsSection(): React.ReactElement {
-  const { contracts, status } = useContracts();
+  const { contracts, status, type } = useContracts();
   const [expirationDate, setExpirationDate] = useState<ChartData[]>([]);
   const [statusData, setStatusData] = useState<ChartData[]>([]);
+  const [typeData, setTypeData] = useState<ChartData[]>([]);
 
   useEffect(() => {
     setExpirationDate(mapContractsToExpirationData(contracts));
     setStatusData(mapContractsToStatusData(contracts, status));
-  }, [contracts, status]);
+    setTypeData(mapContractsToTypeData(contracts, type));
+  }, [contracts, status, type]);
 
   return (
     <>
@@ -27,17 +33,17 @@ export default function ChartsSection(): React.ReactElement {
             <TabsTrigger value="status">Status</TabsTrigger>
           </TabsList>
           <TabsContent value="expiration">
-            <ContractExpirationChart chartData={expirationDate} />
+            <ContractExpirationChart barsChartData={expirationDate} />
           </TabsContent>
           <TabsContent value="status">
-            <ContractStatusChart chartData={statusData} />
+            <ContractStatusChart statusData={statusData} typeData={typeData} />
           </TabsContent>
         </Tabs>
       </div>
 
       <div className="hidden gap-4 md:grid md:grid-cols-2">
-        <ContractExpirationChart chartData={expirationDate} />
-        <ContractStatusChart chartData={statusData} />
+        <ContractExpirationChart barsChartData={expirationDate} />
+        <ContractStatusChart statusData={statusData} typeData={typeData} />
       </div>
     </>
   );

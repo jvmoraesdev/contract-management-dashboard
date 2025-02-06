@@ -49,9 +49,11 @@ const barsChartConfig = {
   }
 } satisfies ChartConfig;
 
-export const ContractExpirationChart: React.FC<ChartDataProps> = ({ chartData }) => {
+export const ContractExpirationChart: React.FC<ChartDataProps> = ({ barsChartData }) => {
   const { isMobile } = useMobile();
-  const displayData = isMobile ? chartData.slice(0, 6) : chartData;
+  if (!barsChartData) return null;
+
+  const displayData = isMobile ? barsChartData.slice(0, 6) : barsChartData;
 
   return (
     <ChartCardContainer
