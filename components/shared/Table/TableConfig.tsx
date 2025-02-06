@@ -19,13 +19,15 @@ interface TableConfigProps {
   type: Type[];
   onEdit: (contract: ContractWithId) => void;
   onDelete: (id: string) => void;
+  noActions?: boolean;
 }
 
 export const getColumns = ({
   status,
   type,
   onEdit,
-  onDelete
+  onDelete,
+  noActions
 }: TableConfigProps): ColumnDef<ContractWithId>[] => {
   return [
     {
@@ -174,6 +176,8 @@ export const getColumns = ({
       id: 'actions',
       cell: ({ row }) => {
         const contract = row.original;
+
+        if (noActions) return null;
 
         return (
           <>

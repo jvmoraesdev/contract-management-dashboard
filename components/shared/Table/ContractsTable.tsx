@@ -34,11 +34,15 @@ import { getColumns } from './TableConfig';
 interface ContractsTableProps {
   onEditAction?: (contract: ContractWithId) => void;
   onDeleteAction?: (id: string) => void;
+  noActions?: boolean;
+  initialFilter?: string;
 }
 
 const ContractsTable: React.FC<ContractsTableProps> = ({
   onEditAction = () => {},
-  onDeleteAction = () => {}
+  onDeleteAction = () => {},
+  noActions = false,
+  initialFilter = ''
 }) => {
   const { contracts, status, type } = useContracts();
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -46,18 +50,43 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
   const [statusFilter, setStatusFilter] = React.useState<number>();
   const [typeFilter, setTypeFilter] = React.useState<number>();
 
+  React.useEffect(() => {
+    if (initialFilter) {
+      switch (initialFilter) {
+        case 'activeContracts':
+          setStatusFilter(1);
+          break;
+        case 'expiringSoon':
+          break;
+        case 'value':
+          setSorting([{ id: 'value', desc: true }]);
+          break;
+      }
+    }
+  }, [initialFilter]);
+
   const columns = React.useMemo(
-    () => getColumns({ status, type, onEdit: onEditAction, onDelete: onDeleteAction }),
-    [status, type, onEditAction, onDeleteAction]
+    () => getColumns({ status, type, onEdit: onEditAction, onDelete: onDeleteAction, noActions }),
+    [status, type, onEditAction, onDeleteAction, noActions]
   );
 
   const filteredData = React.useMemo(() => {
-    return contracts.filter((contract) => {
+    const filtered = contracts.filter((contract) => {
       const matchesStatus = statusFilter ? contract.status === statusFilter : true;
       const matchesType = typeFilter ? contract.type === typeFilter : true;
+
+      if (initialFilter === 'expiringSoon') {
+        const thirtyDaysFromNow = new Date();
+        thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+        const endDate = new Date(contract.endDate);
+        return endDate <= thirtyDaysFromNow && endDate >= new Date();
+      }
+
       return matchesStatus && matchesType;
     });
-  }, [contracts, statusFilter, typeFilter]);
+
+    return filtered;
+  }, [contracts, statusFilter, typeFilter, initialFilter]);
 
   const table = useReactTable({
     data: filteredData,

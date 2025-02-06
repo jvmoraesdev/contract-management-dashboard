@@ -58,8 +58,6 @@ export default function Home() {
     });
   }, []);
 
-  // Efeito para aplicar os filtros quando qualquer filtro mudar
-
   const [showAddContract, setShowAddContract] = useState(false);
   const [selectedContract, setSelectedContract] = useState<ContractWithId | undefined>();
   const [date, setDate] = useState(getDefaultDateRange());
