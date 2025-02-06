@@ -1,18 +1,21 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Sidebar from '@/components/shared/SideBar';
 import AddContractDialog from '@/components/shared/AddContractDialog';
-import MetricsGrid from '@/components/shared/MetricsGrid';
 import ChartsSection from '@/components/shared/Charts/ChartsSelection';
 import ContractsTable from '@/components/shared/ContractsTable';
+import MetricsGrid from '@/components/shared/MetricsGrid';
+import { SideBar } from '@/components/shared/SideBar';
+import { useSidebar } from '@/components/ui/sidebar';
 import {
   getAllContracts,
   getAllContractsStatus,
   getAllContractsTypes
 } from '@/services/contracts.service';
 import useContracts from '@/stores/hooks/useContracts';
+import useMobile from '@/stores/hooks/useMobile';
 import { Menu } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import React from 'react';
 
 export default function Home() {
   const { setContracts, setStatus, setType } = useContracts();
@@ -29,43 +32,25 @@ export default function Home() {
     });
   }, []);
 
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showAddContract, setShowAddContract] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window?.innerWidth < 768);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (isMobile) setSidebarCollapsed(true);
-  }, [isMobile]);
+  const { isMobile } = useMobile();
+  const { toggleSidebar } = useSidebar();
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar
-        collapsed={sidebarCollapsed}
-        onCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-        isMobile={isMobile}
-      />
-      {isMobile && !sidebarCollapsed && (
-        <div className="fixed inset-0 z-40 bg-black/50" onClick={() => setSidebarCollapsed(true)} />
-      )}
+      <SideBar />
       <main className="flex-1 overflow-y-auto">
         <div className="container mx-auto space-y-4 p-4">
           <div className="flex items-center justify-between">
-            {isMobile && (
-              <button
-                onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                className="-ml-2 mr-2 rounded-md p-2 hover:bg-accent md:hidden"
-              >
-                <Menu className="h-6 w-6" />
-              </button>
-            )}
-            <h1 className="text-2xl font-bold">Contract Management Dashboard</h1>
+            <button
+              onClick={toggleSidebar}
+              className="-ml-2 mr-2 rounded-md p-2 hover:bg-accent md:hidden"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+
+            <h1 className="text-2xl font-bold">{`${!isMobile ? 'Contract Management ' : 'C.M.'}Dashboard`}</h1>
             <AddContractDialog
               open={showAddContract}
               onOpenChange={setShowAddContract}
