@@ -1,6 +1,6 @@
 'use client';
 
-import AddContractDialog from '@/components/shared/AddContractDialog';
+import AddContractDialog from '@/components/shared/ContractDialog';
 import ChartsSection from '@/components/shared/Charts/ChartsSelection';
 import ContractsTable from '@/components/shared/Table/ContractsTable';
 import MetricsGrid from '@/components/shared/MetrictsGrid.tsx/MetricsGrid';
@@ -10,7 +10,8 @@ import {
   getAllContracts,
   getAllContractsStatus,
   getAllContractsTypes,
-  updateContract
+  updateContract,
+  deleteContractByID
 } from '@/services/contracts.service';
 import useContracts from '@/stores/hooks/useContracts';
 import { useEffect, useState } from 'react';
@@ -28,6 +29,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown, FilterX } from 'lucide-react';
 import { applyFilters } from '@/utils/filterData';
+import { AlertDialogModal } from '@/components/shared/AlertDialog';
 
 const getDefaultDateRange = () => {
   const today = new Date();
@@ -117,6 +119,25 @@ export default function Home() {
     const hasCustomType = typeFilter !== undefined;
 
     return !isDefaultDateRange || hasCustomStatus || hasCustomType;
+  };
+
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [contractToDelete, setContractToDelete] = useState<string>('');
+
+  const handleConfirmDelete = async () => {
+    if (contractToDelete) {
+      deleteContractByID(contractToDelete).then(() => {
+        setContracts(contracts.filter((c) => c.id !== contractToDelete));
+      });
+
+      setContractToDelete('');
+    }
+    setShowDeleteDialog(false);
+  };
+
+  const handleDeleteContract = async (id: string) => {
+    setContractToDelete(id);
+    setShowDeleteDialog(true);
   };
 
   return (
@@ -218,16 +239,24 @@ export default function Home() {
           <ChartsSection />
 
           <ContractsTable
-            onEdit={(contract) => {
+            onEditAction={(contract) => {
               setSelectedContract(contract);
               setShowAddContract(true);
             }}
-            onDelete={(contract) => {
-              console.log('Delete contract:', contract);
-            }}
+            onDeleteAction={(id) => handleDeleteContract(id)}
           />
         </div>
       </main>
+
+      <AlertDialogModal
+        title="Confirmar Exclusão"
+        description="Tem certeza que deseja excluir este contrato? Esta ação não pode ser desfeita."
+        trueLabel="Sim"
+        falseLabel="Não"
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

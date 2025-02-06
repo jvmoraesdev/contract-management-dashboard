@@ -32,13 +32,13 @@ import {
 import { getColumns } from './TableConfig';
 
 interface ContractsTableProps {
-  onEdit?: (contract: ContractWithId) => void;
-  onDelete?: (contract: ContractWithId) => void;
+  onEditAction?: (contract: ContractWithId) => void;
+  onDeleteAction?: (id: string) => void;
 }
 
 const ContractsTable: React.FC<ContractsTableProps> = ({
-  onEdit = () => {},
-  onDelete = () => {}
+  onEditAction = () => {},
+  onDeleteAction = () => {}
 }) => {
   const { contracts, status, type } = useContracts();
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -47,8 +47,8 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
   const [typeFilter, setTypeFilter] = React.useState<number>();
 
   const columns = React.useMemo(
-    () => getColumns({ status, type, onEdit, onDelete }),
-    [status, type, onEdit, onDelete]
+    () => getColumns({ status, type, onEdit: onEditAction, onDelete: onDeleteAction }),
+    [status, type, onEditAction, onDeleteAction]
   );
 
   const filteredData = React.useMemo(() => {

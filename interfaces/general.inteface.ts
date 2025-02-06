@@ -7,3 +7,13 @@ export interface Response {
 export interface ChildrenProps {
   children?: ReactElement | null;
 }
+
+export interface AlertDialogModalProps {
+  title: string;
+  description: string;
+  trueLabel: string;
+  falseLabel: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
+}
