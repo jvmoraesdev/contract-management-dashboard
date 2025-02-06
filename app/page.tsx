@@ -227,6 +227,7 @@ export default function Home() {
                   }}
                   onSubmit={handleContractSubmit}
                   contract={selectedContract}
+                  showTrigger={true}
                 />
               </div>
             </>

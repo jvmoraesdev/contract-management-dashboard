@@ -180,7 +180,7 @@ export const getColumns = ({
         if (noActions) return null;
 
         return (
-          <>
+          <div onClick={(e) => e.stopPropagation()}>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
@@ -197,7 +197,7 @@ export const getColumns = ({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </>
+          </div>
         );
       }
     }

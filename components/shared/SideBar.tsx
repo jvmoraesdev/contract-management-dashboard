@@ -10,9 +10,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail
+  SidebarRail,
+  useSidebar
 } from '@/components/ui/sidebar';
-import { FileText, LayoutDashboard, Moon, Settings, Sun, Users } from 'lucide-react';
+import { FileText, LayoutDashboard, Moon, PanelLeft, Settings, Sun, Users } from 'lucide-react';
 import React, { useState } from 'react';
 import { Separator } from '../ui/separator';
 import { Switch } from '../ui/switch';
@@ -41,6 +42,7 @@ const menuItems = [
 
 export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [theme, setTheme] = useState<'dark' | 'light'>('light');
+  const { toggleSidebar } = useSidebar();
 
   return (
     <Sidebar
@@ -79,6 +81,12 @@ export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
+            <SidebarMenuItem>
+              <SidebarMenuButton onClick={toggleSidebar}>
+                <PanelLeft className="h-4 w-4" />
+                <span>Hide</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
@@ -87,6 +95,7 @@ export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       <SidebarFooter>
         <SidebarGroupLabel>Theme</SidebarGroupLabel>
+
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>

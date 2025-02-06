@@ -35,6 +35,8 @@ interface ContractDialogProps {
   onOpenChange?: (open: boolean) => void;
   onSubmit?: (data: Contract | ContractWithId) => void;
   contract?: ContractWithId;
+  viewOnly?: boolean;
+  showTrigger?: boolean;
 }
 
 const formSchema = z.object({
@@ -52,7 +54,9 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
   open = false,
   onOpenChange = () => {},
   onSubmit = () => {},
-  contract
+  contract,
+  viewOnly = false,
+  showTrigger = false
 }) => {
   const { status, type } = useContracts();
   const { isMobile } = useMobile();
@@ -108,14 +112,22 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline">
-          {isMobile ? <Plus strokeWidth="3px" /> : 'Adicionar Contrato'}
-        </Button>
-      </DialogTrigger>
+      {showTrigger && (
+        <DialogTrigger asChild>
+          <Button variant="outline">
+            {isMobile ? <Plus strokeWidth="3px" /> : 'Adicionar Contrato'}
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent className="bg-white dark:bg-gray-800 sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>{isEditing ? 'Editar Contrato' : 'Adicionar Contrato'}</DialogTitle>
+          <DialogTitle>
+            {viewOnly
+              ? 'Visualizar Contrato'
+              : isEditing
+                ? 'Editar Contrato'
+                : 'Adicionar Contrato'}
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           {isEditing && (
@@ -126,14 +138,16 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           )}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Contract Name</Label>
+              <Label htmlFor="name">Nome do Contrato</Label>
               <Input
                 id="name"
-                placeholder="Enter contract name"
+                placeholder="Digite o nome do contrato"
                 {...form.register('name')}
+                disabled={viewOnly}
                 className={cn(
                   isFieldModified('name') && 'border-yellow-500',
-                  form.formState.errors.name && 'border-red-500'
+                  form.formState.errors.name && 'border-red-500',
+                  viewOnly && 'bg-gray-100'
                 )}
               />
               {form.formState.errors.name && (
@@ -141,20 +155,22 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="type">Contract Type</Label>
+              <Label htmlFor="type">Tipo de Contrato</Label>
               <Select
                 value={watchedType?.toString()}
                 onValueChange={(value) =>
                   form.setValue('type', Number(value), { shouldDirty: true })
                 }
+                disabled={viewOnly}
               >
                 <SelectTrigger
                   className={cn(
                     isFieldModified('type') && 'border-yellow-500',
-                    form.formState.errors.type && 'border-red-500'
+                    form.formState.errors.type && 'border-red-500',
+                    viewOnly && 'bg-gray-100'
                   )}
                 >
-                  <SelectValue placeholder="Select type" />
+                  <SelectValue placeholder="Selecione o tipo" />
                 </SelectTrigger>
                 <SelectContent>
                   {type.map((selectedType) => (
@@ -171,7 +187,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label>Contract Period</Label>
+            <Label>Período do Contrato</Label>
             <DatePickerWithRange
               from={form.watch('startDate')}
               to={form.watch('endDate')}
@@ -185,6 +201,8 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               }}
               isModified={isFieldModified('startDate') || isFieldModified('endDate')}
               hasError={!!form.formState.errors.startDate || !!form.formState.errors.endDate}
+              disabled={viewOnly}
+              className={cn(viewOnly && 'bg-gray-100')}
             />
             {(form.formState.errors.startDate || form.formState.errors.endDate) && (
               <p className="text-sm text-red-500">Data inválida</p>
@@ -192,15 +210,17 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="value">Contract Value</Label>
+            <Label htmlFor="value">Valor do Contrato</Label>
             <Input
               id="value"
-              placeholder="Enter contract value"
+              placeholder="Digite o valor do contrato"
               type="number"
               {...form.register('value', { valueAsNumber: true })}
+              disabled={viewOnly}
               className={cn(
                 isFieldModified('value') && 'border-yellow-500',
-                form.formState.errors.value && 'border-red-500'
+                form.formState.errors.value && 'border-red-500',
+                viewOnly && 'bg-gray-100'
               )}
             />
             {form.formState.errors.value && (
@@ -209,14 +229,16 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="clientOrSupplier">Client/Supplier</Label>
+            <Label htmlFor="clientOrSupplier">Cliente/Fornecedor</Label>
             <Input
               id="clientOrSupplier"
-              placeholder="Enter client or supplier name"
+              placeholder="Digite o nome do cliente ou fornecedor"
               {...form.register('clientOrSupplier')}
+              disabled={viewOnly}
               className={cn(
                 isFieldModified('clientOrSupplier') && 'border-yellow-500',
-                form.formState.errors.clientOrSupplier && 'border-red-500'
+                form.formState.errors.clientOrSupplier && 'border-red-500',
+                viewOnly && 'bg-gray-100'
               )}
             />
             {form.formState.errors.clientOrSupplier && (
@@ -233,14 +255,16 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               onValueChange={(value) =>
                 form.setValue('status', Number(value), { shouldDirty: true })
               }
+              disabled={viewOnly}
             >
               <SelectTrigger
                 className={cn(
                   isFieldModified('status') && 'border-yellow-500',
-                  form.formState.errors.status && 'border-red-500'
+                  form.formState.errors.status && 'border-red-500',
+                  viewOnly && 'bg-gray-100'
                 )}
               >
-                <SelectValue placeholder="Select status" />
+                <SelectValue placeholder="Selecione o status" />
               </SelectTrigger>
               <SelectContent>
                 {status.map((selectedStatus) => (
@@ -256,10 +280,20 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Cancelar
-            </Button>
-            <Button type="submit">{isEditing ? 'Salvar Alterações' : 'Adicionar Contrato'}</Button>
+            {viewOnly ? (
+              <Button type="button" onClick={() => onOpenChange(false)}>
+                Fechar
+              </Button>
+            ) : (
+              <>
+                <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                  Cancelar
+                </Button>
+                <Button type="submit">
+                  {isEditing ? 'Salvar Alterações' : 'Adicionar Contrato'}
+                </Button>
+              </>
+            )}
           </DialogFooter>
         </form>
       </DialogContent>
