@@ -2,43 +2,41 @@ import { ContractWithId, Status } from '@/interfaces/contracts.interface';
 import { ChartData } from '@/interfaces/chats.interface';
 
 /**
- * Mapeia contratos para dados de expiração nos próximos 6 meses.
+ * Mapeia contratos para dados de expiração nos próximos 6/12 meses.
  */
 export function mapContractsToExpirationData(contracts: ContractWithId[]): ChartData[] {
   const today = new Date();
-  const sixMonthsFromNow = new Date();
-  sixMonthsFromNow.setMonth(today.getMonth() + 6);
+  const currentMonth = today.getMonth();
 
-  const monthMap: Record<string, number> = {
-    Jan: 0,
-    Feb: 0,
-    Mar: 0,
-    Apr: 0,
-    May: 0,
-    Jun: 0,
-    Jul: 0,
-    Aug: 0,
-    Sep: 0,
-    Oct: 0,
-    Nov: 0,
-    Dec: 0
-  };
+  // Inicializa um array com os próximos 12 meses
+  const nextMonths = Array.from({ length: 12 }, (_, i) => {
+    const date = new Date();
+    date.setMonth(currentMonth + i);
+    return date.toLocaleString('en', { month: 'short' });
+  });
+
+  const monthMap: Record<string, number> = {};
+  nextMonths.forEach((month) => {
+    monthMap[month] = 0;
+  });
 
   contracts.forEach((contract) => {
     const endDate = new Date(contract.endDate);
+    const monthsAhead =
+      (endDate.getFullYear() - today.getFullYear()) * 12 + (endDate.getMonth() - today.getMonth());
 
-    if (endDate >= today && endDate <= sixMonthsFromNow) {
-      const monthKey = endDate.toLocaleString('en', { month: 'short' }) as keyof typeof monthMap;
+    if (monthsAhead >= 0 && monthsAhead < 12) {
+      const monthKey = endDate.toLocaleString('en', { month: 'short' });
       if (monthKey in monthMap) {
         monthMap[monthKey]++;
       }
     }
   });
 
-  return Object.entries(monthMap).map(([month, count], index) => ({
+  return nextMonths.map((month, index) => ({
     label: month,
-    value: count,
-    fill: `hsl(var(--chart-${index + 1}))`
+    value: monthMap[month],
+    fill: `hsl(var(--chart-${(index % 12) + 1}))`
   }));
 }
 

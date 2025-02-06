@@ -5,6 +5,7 @@ import { ChartConfig, ChartTooltip, ChartTooltipContent } from '../../ui/chart';
 import { ChartCardContainer } from './ChartCardContainer';
 import React from 'react';
 import { ChartDataProps } from '@/interfaces/chats.interface';
+import useMobile from '@/stores/hooks/useMobile';
 
 const barsChartConfig = {
   contracts: {
@@ -27,15 +28,39 @@ const barsChartConfig = {
   },
   Jun: {
     label: 'Junho'
+  },
+  Jul: {
+    label: 'Julho'
+  },
+  Aug: {
+    label: 'Agosto'
+  },
+  Sep: {
+    label: 'Setembro'
+  },
+  Oct: {
+    label: 'Outubro'
+  },
+  Nov: {
+    label: 'Novembro'
+  },
+  Dec: {
+    label: 'Dezembro'
   }
 } satisfies ChartConfig;
 
 export const ContractExpirationChart: React.FC<ChartDataProps> = ({ chartData }) => {
+  const { isMobile } = useMobile();
+  const displayData = isMobile ? chartData.slice(0, 6) : chartData;
+
   return (
-    <ChartCardContainer title="Contract Expiration Timeline" labelConfig={barsChartConfig}>
+    <ChartCardContainer
+      title="Linha do Tempo de Expiração de Contratos"
+      labelConfig={barsChartConfig}
+    >
       <BarChart
         accessibilityLayer
-        data={chartData}
+        data={displayData}
         margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
       >
         <XAxis dataKey="label" type="category" tickLine={false} tickMargin={4} />

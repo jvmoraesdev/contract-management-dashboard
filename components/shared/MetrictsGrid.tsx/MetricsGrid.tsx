@@ -11,7 +11,7 @@ const MetricsGrid = () => {
   const metrics = getMetrics(contracts);
 
   return (
-    <div className="grid grid-cols-1 gap-4 bg-background p-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 bg-background py-2 md:grid-cols-2 lg:grid-cols-4">
       <MetricCard
         title="Total Contracts"
         value={metrics.totalContracts.toString()}

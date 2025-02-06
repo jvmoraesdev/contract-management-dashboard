@@ -14,12 +14,12 @@ export const ChartCardContainer: React.FC<ChartContainerProps> = ({
   const config = labelConfig satisfies ChartConfig;
   return (
     <Card className="flex h-[300px] flex-col">
-      <CardHeader className="items-center pb-0">
+      <CardHeader className="items-center pb-1">
         {title && <CardTitle>{title}</CardTitle>}
         {subtitle && <CardDescription>{subtitle}</CardDescription>}
       </CardHeader>
-      <CardContent className="mt-4 h-full w-full flex-1 px-10">
-        <ChartContainer config={config} className="h-full max-h-[80%] w-full">
+      <CardContent className="h-full w-full flex-1 px-0">
+        <ChartContainer config={config} className="h-full max-h-[90%] w-full pr-4">
           {children || <></>}
         </ChartContainer>
       </CardContent>

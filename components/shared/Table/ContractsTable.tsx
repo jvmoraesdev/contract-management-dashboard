@@ -76,47 +76,51 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
 
   return (
     <div className="w-full rounded-lg border bg-background p-4">
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center sm:gap-2">
+        <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
           <Input
             placeholder="Buscar contratos..."
-            className="w-64"
+            className="w-full sm:w-64"
             type="search"
             value={globalFilter}
             onChange={(e) => setGlobalFilter(e.target.value)}
           />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                Status <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => setStatusFilter(undefined)}>Todos</DropdownMenuItem>
-              {status.map((s) => (
-                <DropdownMenuItem key={s.id} onClick={() => setStatusFilter(s.id)}>
-                  {s.name}
+          <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full sm:w-auto">
+                  Status <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => setStatusFilter(undefined)}>
+                  Todos
                 </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                Tipo <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => setTypeFilter(undefined)}>Todos</DropdownMenuItem>
-              {type.map((t) => (
-                <DropdownMenuItem key={t.id} onClick={() => setTypeFilter(t.id)}>
-                  {t.name}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                {status.map((s) => (
+                  <DropdownMenuItem key={s.id} onClick={() => setStatusFilter(s.id)}>
+                    {s.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full sm:w-auto">
+                  Tipo <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => setTypeFilter(undefined)}>Todos</DropdownMenuItem>
+                {type.map((t) => (
+                  <DropdownMenuItem key={t.id} onClick={() => setTypeFilter(t.id)}>
+                    {t.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex w-full items-center justify-end gap-2 sm:w-auto">
           <Button
             variant="outline"
             size="sm"
@@ -136,7 +140,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
         </div>
       </div>
 
-      <div className="rounded-md border">
+      <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
