@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import React from 'react';
 import ContractsProvider from '@/stores/contracts.provider';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import MobileProvider from '@/stores/mobile.provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,7 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ContractsProvider>{children}</ContractsProvider>
+        <MobileProvider>
+          <SidebarProvider>
+            <ContractsProvider>{children}</ContractsProvider>
+          </SidebarProvider>
+        </MobileProvider>
       </body>
     </html>
   );
