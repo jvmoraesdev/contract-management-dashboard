@@ -104,7 +104,7 @@ export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <Separator />
 
       <SidebarFooter>
-        <SidebarGroupLabel>Theme</SidebarGroupLabel>
+        <SidebarGroupLabel>Theme [WIP]</SidebarGroupLabel>
 
         <SidebarMenu>
           <SidebarMenuItem>
