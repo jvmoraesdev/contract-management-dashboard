@@ -139,6 +139,7 @@ Access: http://localhost:3000
 
 ### Benefits Obtained
 
+- Great help in cleaning, converting, and adding new mock data for more robust tests.
 - Significant increase in productivity;
 - Improvement in code quality;
 - Facilitation in writing tests;
