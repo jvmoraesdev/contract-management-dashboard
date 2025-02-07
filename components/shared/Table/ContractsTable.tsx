@@ -62,6 +62,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
           setStatusFilter(1);
           break;
         case 'expiringSoon':
+          setStatusFilter(4);
           break;
         case 'value':
           setSorting([{ id: 'value', desc: true }]);
@@ -88,10 +89,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
       const matchesType = typeFilter ? contract.type === typeFilter : true;
 
       if (initialFilter === 'expiringSoon') {
-        const thirtyDaysFromNow = new Date();
-        thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
-        const endDate = new Date(contract.endDate);
-        return endDate <= thirtyDaysFromNow && endDate >= new Date();
+        return contract.status === 4;
       }
 
       return matchesStatus && matchesType;

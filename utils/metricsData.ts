@@ -48,7 +48,7 @@ export const getMetrics = (contracts: ContractWithId[]) => {
   const growth = calculateContractsGrowth(contracts);
 
   return {
-    totalContracts: contracts.length,
+    totalContracts: contracts.length + 1,
     activeContracts: contracts.filter((contract) => contract.status === 1).length,
     expiringSoon: expiringCount,
     totalValue: totalValue,

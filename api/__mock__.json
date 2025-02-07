@@ -149,6 +149,256 @@
       "status": 2,
       "value": 220000.0,
       "type": 1
+    },
+    {
+      "id": "CT-016",
+      "name": "Desenvolvimento Mobile",
+      "clientOrSupplier": "MobileFirst Inc",
+      "startDate": "2023-01-15",
+      "endDate": "2026-12-20",
+      "status": 1,
+      "value": 280000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-017",
+      "name": "Fornecimento de Insumos",
+      "clientOrSupplier": "Supply Masters",
+      "startDate": "2022-05-10",
+      "endDate": "2024-05-30",
+      "status": 2,
+      "value": 150000.0,
+      "type": 2
+    },
+    {
+      "id": "CT-018",
+      "name": "Consultoria em Marketing",
+      "clientOrSupplier": "Marketing Pro",
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-15",
+      "status": 3,
+      "value": 95000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-019",
+      "name": "Suporte Help Desk",
+      "clientOrSupplier": "HelpTech Solutions",
+      "startDate": "2024-03-01",
+      "endDate": "2024-04-30",
+      "status": 4,
+      "value": 45000.0,
+      "type": 1
+    },
+    {
+      "id": "CT-020",
+      "name": "Gestão de Redes",
+      "clientOrSupplier": "NetControl",
+      "startDate": "2023-06-15",
+      "endDate": "2026-06-15",
+      "status": 1,
+      "value": 320000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-021",
+      "name": "Fornecimento de Equipamentos",
+      "clientOrSupplier": "TechSupplies",
+      "startDate": "2023-01-01",
+      "endDate": "2024-03-30",
+      "status": 2,
+      "value": 180000.0,
+      "type": 2
+    },
+    {
+      "id": "CT-022",
+      "name": "Consultoria Legal",
+      "clientOrSupplier": "Legal Experts",
+      "startDate": "2024-02-01",
+      "endDate": "2024-06-01",
+      "status": 3,
+      "value": 75000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-023",
+      "name": "Manutenção de Servidores",
+      "clientOrSupplier": "ServerPro",
+      "startDate": "2024-03-01",
+      "endDate": "2024-04-25",
+      "status": 4,
+      "value": 28000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-024",
+      "name": "Desenvolvimento Frontend",
+      "clientOrSupplier": "WebMasters",
+      "startDate": "2024-01-01",
+      "endDate": "2026-12-31",
+      "status": 1,
+      "value": 450000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-025",
+      "name": "Fornecimento de Licenças",
+      "clientOrSupplier": "SoftLicense",
+      "startDate": "2023-06-01",
+      "endDate": "2024-03-31",
+      "status": 2,
+      "value": 95000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-026",
+      "name": "Desenvolvimento Backend",
+      "clientOrSupplier": "BackendPro",
+      "startDate": "2024-01-15",
+      "endDate": "2026-11-30",
+      "status": 1,
+      "value": 380000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-027",
+      "name": "Segurança da Informação",
+      "clientOrSupplier": "SecureIT",
+      "startDate": "2024-03-01",
+      "endDate": "2024-05-01",
+      "status": 4,
+      "value": 65000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-028",
+      "name": "Consultoria em Processos",
+      "clientOrSupplier": "Process Masters",
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-30",
+      "status": 3,
+      "value": 120000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-029",
+      "name": "Fornecimento de Móveis",
+      "clientOrSupplier": "Office Solutions",
+      "startDate": "2023-05-15",
+      "endDate": "2024-03-15",
+      "status": 2,
+      "value": 85000.0,
+      "type": 2
+    },
+    {
+      "id": "CT-030",
+      "name": "Gestão de Projetos",
+      "clientOrSupplier": "PMO Experts",
+      "startDate": "2024-02-01",
+      "endDate": "2026-12-15",
+      "status": 1,
+      "value": 290000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-031",
+      "name": "Manutenção de Rede",
+      "clientOrSupplier": "NetworkPro",
+      "startDate": "2024-02-15",
+      "endDate": "2024-04-20",
+      "status": 4,
+      "value": 42000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-032",
+      "name": "Consultoria Ambiental",
+      "clientOrSupplier": "EcoConsult",
+      "startDate": "2024-01-20",
+      "endDate": "2024-05-30",
+      "status": 3,
+      "value": 110000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-033",
+      "name": "Serviços de Cloud",
+      "clientOrSupplier": "CloudMasters",
+      "startDate": "2023-12-01",
+      "endDate": "2026-12-01",
+      "status": 1,
+      "value": 420000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-034",
+      "name": "Fornecimento de Software",
+      "clientOrSupplier": "SoftwareHub",
+      "startDate": "2023-04-10",
+      "endDate": "2024-03-10",
+      "status": 2,
+      "value": 165000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-035",
+      "name": "Gestão de Dados",
+      "clientOrSupplier": "DataControl",
+      "startDate": "2024-02-01",
+      "endDate": "2024-04-15",
+      "status": 4,
+      "value": 55000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-036",
+      "name": "Desenvolvimento IoT",
+      "clientOrSupplier": "IoTech Solutions",
+      "startDate": "2024-01-01",
+      "endDate": "2026-10-31",
+      "status": 1,
+      "value": 310000.0,
+      "type": 4
+    },
+    {
+      "id": "CT-037",
+      "name": "Consultoria em Inovação",
+      "clientOrSupplier": "InnovateNow",
+      "startDate": "2024-02-15",
+      "endDate": "2024-06-20",
+      "status": 3,
+      "value": 145000.0,
+      "type": 3
+    },
+    {
+      "id": "CT-038",
+      "name": "Suporte Técnico 24/7",
+      "clientOrSupplier": "TechSupport",
+      "startDate": "2024-03-01",
+      "endDate": "2024-04-28",
+      "status": 4,
+      "value": 38000.0,
+      "type": 1
+    },
+    {
+      "id": "CT-039",
+      "name": "Automação Industrial",
+      "clientOrSupplier": "AutomationPro",
+      "startDate": "2023-08-15",
+      "endDate": "2026-08-15",
+      "status": 1,
+      "value": 520000.0,
+      "type": 1
+    },
+    {
+      "id": "CT-040",
+      "name": "Fornecimento de Energia",
+      "clientOrSupplier": "PowerSupply",
+      "startDate": "2023-03-01",
+      "endDate": "2024-03-01",
+      "status": 2,
+      "value": 280000.0,
+      "type": 2
     }
   ],
   "status": [
