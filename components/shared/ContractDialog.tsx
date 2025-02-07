@@ -22,7 +22,6 @@ import {
 import DatePickerWithRange from '@/components/ui/date-picker-with-range';
 import { addDays } from 'date-fns';
 import { Plus } from 'lucide-react';
-import useMobile from '@/stores/hooks/useMobile';
 import { Contract, ContractWithId } from '@/interfaces/contracts.interface';
 import useContracts from '@/stores/hooks/useContracts';
 import { useForm } from 'react-hook-form';
@@ -59,7 +58,6 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
   showTrigger = false
 }) => {
   const { status, type } = useContracts();
-  const { isMobile } = useMobile();
   const isEditing = !!contract;
 
   const form = useForm<Contract | ContractWithId>({
@@ -115,7 +113,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
       {showTrigger && (
         <DialogTrigger asChild>
           <Button variant="outline">
-            {isMobile ? <Plus strokeWidth="3px" /> : 'Adicionar Contrato'}
+            <Plus strokeWidth="3px" /> Adicionar Contrato
           </Button>
         </DialogTrigger>
       )}

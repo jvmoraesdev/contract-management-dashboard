@@ -85,8 +85,7 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, type
             innerRadius={25}
             outerRadius={70}
             strokeWidth={1}
-            labelLine={true}
-            label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+            labelLine={false}
           >
             {chartType === 'status'
               ? statusData?.map((_, index) => (
@@ -108,7 +107,7 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, type
               gap: '0.5rem',
               flexWrap: isMobile ? 'wrap' : 'nowrap',
               justifyContent: isMobile ? 'center' : 'flex-start',
-              marginTop: isMobile ? '10px' : '0'
+              paddingTop: '10px'
             }}
           />
         </PieChart>

@@ -18,31 +18,41 @@ import React, { useState } from 'react';
 import { Separator } from '../ui/separator';
 import { Switch } from '../ui/switch';
 
-const menuItems = [
-  {
-    icon: LayoutDashboard,
-    label: 'Dashboard',
-    active: true,
-    onClick: () => {
-      console.log('teste');
-    }
-  },
-  {
-    icon: FileText,
-    label: 'Contracts',
-    active: false
-  },
-  { icon: Users, label: 'Users', active: false },
-  {
-    icon: Settings,
-    label: 'Settings',
-    active: false
-  }
-];
-
 export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [theme, setTheme] = useState<'dark' | 'light'>('light');
   const { toggleSidebar } = useSidebar();
+
+  const menuItems = [
+    {
+      icon: LayoutDashboard,
+      label: 'Dashboard',
+      active: true
+    },
+    {
+      icon: FileText,
+      label: 'Contracts [WIP]',
+      active: false,
+      onClick: () => {
+        console.log('Feature in development');
+      }
+    },
+    {
+      icon: Users,
+      label: 'Users [WIP]',
+      active: false,
+      onClick: () => {
+        console.log('Feature in development');
+      }
+    },
+    {
+      icon: Settings,
+      label: 'Settings [WIP]',
+      active: false,
+      onClick: () => {
+        console.log('Feature in development');
+      }
+    }
+  ];
 
   return (
     <Sidebar
