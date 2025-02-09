@@ -26,7 +26,7 @@ const MetricsGrid = () => {
             title="Total Contracts"
             value={metrics.totalContracts.toString()}
             change={metrics.totalContractsChange}
-            icon={<FileText className="text-primary" size={22} strokeWidth={1} />}
+            icon={<FileText className="text-primary" size={22} strokeWidth={1.75} />}
           />
         </div>
         <div onClick={() => handleMetricClick('activeContracts')} className="cursor-pointer">

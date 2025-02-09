@@ -47,15 +47,20 @@ const SideBarFooter = () => {
 
         <SidebarMenuItem>
           <Select
-            onValueChange={(value) => setThemeColor(value as ThemeCollors)}
+            onValueChange={(value) => {
+              console.log(value);
+              setThemeColor(value as ThemeCollors);
+            }}
             defaultValue={themeColor}
           >
             <SelectTrigger>
               <SelectValue placeholder="Theme" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="blue">Blue</SelectItem>
-              <SelectItem value="red">Red</SelectItem>
+              <SelectItem value="default">Default</SelectItem>
+              <SelectItem value="sapphire">Sapphire</SelectItem>
+              <SelectItem value="ruby">Ruby</SelectItem>
+              <SelectItem value="emerald">Emerald</SelectItem>
             </SelectContent>
           </Select>
         </SidebarMenuItem>

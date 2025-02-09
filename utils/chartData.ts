@@ -36,7 +36,7 @@ export function mapContractsToExpirationData(contracts: ContractWithId[]): Chart
   return nextMonths.map((month, index) => ({
     label: month,
     value: monthMap[month],
-    fill: `hsl(var(--chart-${(index % 12) + 1}))`
+    fill: `hsl(var(--chart-${(index % 4) + 1}))`
   }));
 }
 

@@ -53,8 +53,6 @@ const typesPieChartConfig = {
   }
 } satisfies ChartConfig;
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
 export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, typeData }) => {
   const [chartType, setChartType] = useState<'status' | 'type'>('status');
   const { isMobile } = useMobile();
@@ -89,10 +87,10 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, type
           >
             {chartType === 'status'
               ? statusData?.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={`hsl(var(--chart-${(index % 5) + 1}))`} />
                 ))
               : typeData?.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={`hsl(var(--chart-${(index % 5) + 1}))`} />
                 ))}
           </Pie>
           <Legend
@@ -109,6 +107,7 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, type
               justifyContent: isMobile ? 'center' : 'flex-start',
               paddingTop: '10px'
             }}
+            formatter={(value) => <span className="text-foreground">{value}</span>}
           />
         </PieChart>
       </ResponsiveContainer>

@@ -1,4 +1,4 @@
-export type ThemeCollors = 'blue' | 'red';
+export type ThemeCollors = 'default' | 'sapphire' | 'ruby' | 'emerald';
 export type ThemeMode = 'light' | 'dark';
 
 export interface ThemeColorStateProps {
