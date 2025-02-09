@@ -19,6 +19,7 @@ import { applyFilters } from '@/utils/filterData';
 import { addYears, subYears } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { HeaderContent } from './HeaderContent';
+import { SideBar } from '@/components/shared/SideBar/SideBar';
 
 const Home = () => {
   const getDefaultDateRange = () => {
@@ -126,7 +127,9 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="flex h-screen overflow-hidden bg-background">
+      <SideBar />
+
       <main className="flex-1 overflow-y-auto">
         <div className="container mx-auto space-y-4 p-4">
           <Header>
@@ -170,7 +173,7 @@ const Home = () => {
         onOpenChange={setShowDeleteDialog}
         onConfirm={handleConfirmDelete}
       />
-    </>
+    </div>
   );
 };
 
