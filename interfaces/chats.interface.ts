@@ -1,4 +1,4 @@
-import { ChildrenProps } from './general.inteface';
+import { ChildrenProps } from './general.interface';
 
 export interface ChartCategory {
   label: string;

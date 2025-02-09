@@ -117,7 +117,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           </Button>
         </DialogTrigger>
       )}
-      <DialogContent className="bg-white dark:bg-gray-800 sm:max-w-[600px]">
+      <DialogContent className="bg-popover sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>
             {viewOnly
@@ -131,7 +131,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           {isEditing && (
             <div className="space-y-2">
               <Label htmlFor="id">ID do Contrato</Label>
-              <Input id="id" {...form.register('id')} disabled className="bg-gray-100" />
+              <Input id="id" {...form.register('id')} disabled className="bg-muted-foreground" />
             </div>
           )}
           <div className="grid grid-cols-2 gap-4">
@@ -143,13 +143,13 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                 {...form.register('name')}
                 disabled={viewOnly}
                 className={cn(
-                  isFieldModified('name') && 'border-yellow-500',
-                  form.formState.errors.name && 'border-red-500',
-                  viewOnly && 'bg-gray-100'
+                  isFieldModified('name') && 'border-alert',
+                  form.formState.errors.name && 'border-destructive',
+                  viewOnly && 'bg-muted-foreground'
                 )}
               />
               {form.formState.errors.name && (
-                <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+                <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -163,9 +163,9 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               >
                 <SelectTrigger
                   className={cn(
-                    isFieldModified('type') && 'border-yellow-500',
-                    form.formState.errors.type && 'border-red-500',
-                    viewOnly && 'bg-gray-100'
+                    isFieldModified('type') && 'border-destructive',
+                    form.formState.errors.type && 'border-destructive',
+                    viewOnly && 'bg-muted-foreground'
                   )}
                 >
                   <SelectValue placeholder="Selecione o tipo" />
@@ -179,7 +179,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                 </SelectContent>
               </Select>
               {form.formState.errors.type && (
-                <p className="text-sm text-red-500">{form.formState.errors.type.message}</p>
+                <p className="text-sm text-destructive">{form.formState.errors.type.message}</p>
               )}
             </div>
           </div>
@@ -200,10 +200,10 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               isModified={isFieldModified('startDate') || isFieldModified('endDate')}
               hasError={!!form.formState.errors.startDate || !!form.formState.errors.endDate}
               disabled={viewOnly}
-              className={cn(viewOnly && 'bg-gray-100')}
+              className={cn('rounded-md', viewOnly && 'bg-muted-foreground')}
             />
             {(form.formState.errors.startDate || form.formState.errors.endDate) && (
-              <p className="text-sm text-red-500">Data inválida</p>
+              <p className="text-sm text-destructive">Data inválida</p>
             )}
           </div>
 
@@ -216,13 +216,13 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               {...form.register('value', { valueAsNumber: true })}
               disabled={viewOnly}
               className={cn(
-                isFieldModified('value') && 'border-yellow-500',
-                form.formState.errors.value && 'border-red-500',
-                viewOnly && 'bg-gray-100'
+                isFieldModified('value') && 'border-alert',
+                form.formState.errors.value && 'border-destructive',
+                viewOnly && 'bg-muted-foreground'
               )}
             />
             {form.formState.errors.value && (
-              <p className="text-sm text-red-500">{form.formState.errors.value.message}</p>
+              <p className="text-sm text-destructive">{form.formState.errors.value.message}</p>
             )}
           </div>
 
@@ -234,13 +234,13 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               {...form.register('clientOrSupplier')}
               disabled={viewOnly}
               className={cn(
-                isFieldModified('clientOrSupplier') && 'border-yellow-500',
-                form.formState.errors.clientOrSupplier && 'border-red-500',
-                viewOnly && 'bg-gray-100'
+                isFieldModified('clientOrSupplier') && 'border-alert',
+                form.formState.errors.clientOrSupplier && 'border-destructive',
+                viewOnly && 'bg-muted-foreground'
               )}
             />
             {form.formState.errors.clientOrSupplier && (
-              <p className="text-sm text-red-500">
+              <p className="text-sm text-destructive">
                 {form.formState.errors.clientOrSupplier.message}
               </p>
             )}
@@ -257,9 +257,9 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
             >
               <SelectTrigger
                 className={cn(
-                  isFieldModified('status') && 'border-yellow-500',
-                  form.formState.errors.status && 'border-red-500',
-                  viewOnly && 'bg-gray-100'
+                  isFieldModified('status') && 'border-alert',
+                  form.formState.errors.status && 'border-destructive',
+                  viewOnly && 'bg-muted-foreground'
                 )}
               >
                 <SelectValue placeholder="Selecione o status" />
@@ -273,7 +273,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
               </SelectContent>
             </Select>
             {form.formState.errors.status && (
-              <p className="text-sm text-red-500">{form.formState.errors.status.message}</p>
+              <p className="text-sm text-destructive">{form.formState.errors.status.message}</p>
             )}
           </div>
 

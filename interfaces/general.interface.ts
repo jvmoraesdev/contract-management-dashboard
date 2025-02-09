@@ -17,3 +17,8 @@ export interface AlertDialogModalProps {
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
 }
+
+export interface LoadingStateProps {
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}

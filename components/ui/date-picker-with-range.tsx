@@ -50,9 +50,9 @@ const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
             className={cn(
               'w-full justify-start text-left font-normal',
               !date && 'text-muted-foreground',
-              isModified && 'border-yellow-500',
-              hasError && 'border-red-500',
-              disabled && 'bg-gray-100'
+              isModified && 'border-alert',
+              hasError && 'border-destructive',
+              disabled && 'opacity-50'
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

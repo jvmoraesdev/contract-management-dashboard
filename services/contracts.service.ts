@@ -1,6 +1,6 @@
 import contractsApi from '@/api/contractsApi';
 import { Contract, ContractWithId, Status, Type } from '@/interfaces/contracts.interface';
-import { Response } from '@/interfaces/general.inteface';
+import { Response } from '@/interfaces/general.interface';
 
 export const getAllContracts = async (): Promise<ContractWithId[]> => {
   try {

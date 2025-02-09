@@ -9,7 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
-import { AlertDialogModalProps } from '@/interfaces/general.inteface';
+import { AlertDialogModalProps } from '@/interfaces/general.interface';
 
 export const AlertDialogModal = ({
   title,

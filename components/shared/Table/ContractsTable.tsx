@@ -50,10 +50,10 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [statusFilter, setStatusFilter] = React.useState<number>();
   const [typeFilter, setTypeFilter] = React.useState<number>();
-
-  // Novo estado para controlar o modal de visualização
   const [selectedContract, setSelectedContract] = React.useState<ContractWithId | undefined>();
   const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+  const [contractToEdit, setContractToEdit] = React.useState<ContractWithId | undefined>();
 
   React.useEffect(() => {
     if (initialFilter) {
@@ -100,7 +100,16 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
 
   const table = useReactTable({
     data: filteredData,
-    columns,
+    columns: getColumns({
+      status,
+      type,
+      onEdit: (contract: ContractWithId) => {
+        setContractToEdit(contract);
+        setIsEditModalOpen(true);
+      },
+      onDelete: onDeleteAction,
+      noActions
+    }),
     state: {
       sorting,
       globalFilter
@@ -113,7 +122,6 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
     getFilteredRowModel: getFilteredRowModel()
   });
 
-  // Função para lidar com o clique na linha
   const handleRowClick = (contract: ContractWithId) => {
     setSelectedContract(contract);
     setIsViewModalOpen(true);
@@ -194,7 +202,12 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={
+                        header.column.id === 'actions' ? 'sticky right-0 z-20 bg-background' : ''
+                      }
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -216,7 +229,12 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
                     className={`${noActions ? '' : 'cursor-pointer'} hover:bg-muted/50`}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          cell.column.id === 'actions' ? 'sticky right-0 z-20 bg-background' : ''
+                        }
+                      >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
@@ -239,6 +257,13 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
         onOpenChange={setIsViewModalOpen}
         contract={selectedContract}
         viewOnly
+      />
+
+      <ContractDialog
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        contract={contractToEdit}
+        onSubmit={onEditAction}
       />
     </>
   );

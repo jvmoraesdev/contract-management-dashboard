@@ -2,7 +2,7 @@ import useMobile from '@/stores/hooks/useMobile';
 import React from 'react';
 import { useSidebar } from '../ui/sidebar';
 import { Menu } from 'lucide-react';
-import { ChildrenProps } from '@/interfaces/general.inteface';
+import { ChildrenProps } from '@/interfaces/general.interface';
 import {
   Accordion,
   AccordionContent,
@@ -24,7 +24,9 @@ export const Header = ({ children }: ChildrenProps) => {
           <Menu className="h-6 w-6" />
         </button>
 
-        <h1 className="text-2xl font-bold">C. M. Dashboard</h1>
+        <h1 className="text-2xl font-bold">
+          {`${isMobile ? 'C. M. ' : 'Contract Management '}Dashboard`}
+        </h1>
       </div>
 
       {isMobile ? (
