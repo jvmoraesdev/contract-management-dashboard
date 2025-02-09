@@ -25,7 +25,7 @@ const SideBarHeader = () => {
               <FileText className="h-6 w-6" />
             </div>
             <div className="flex items-center space-x-2">
-              <span className="font-semibold">Contract Manager</span>
+              <span className="font-semibold">C. M. Dashboard</span>
             </div>
           </SidebarMenuButton>
         </SidebarMenuItem>
