@@ -4,7 +4,7 @@ import AddContractDialog from '@/components/shared/ContractDialog';
 import ChartsSection from '@/components/shared/Charts/ChartsSelection';
 import ContractsTable from '@/components/shared/Table/ContractsTable';
 import MetricsGrid from '@/components/shared/MetrictsGrid.tsx/MetricsGrid';
-import { SideBar } from '@/components/shared/SideBar';
+import { SideBar } from '@/components/shared/SideBar/SideBar';
 import {
   createContract,
   getAllContracts,
