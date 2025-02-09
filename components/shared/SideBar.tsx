@@ -14,13 +14,19 @@ import {
   useSidebar
 } from '@/components/ui/sidebar';
 import { FileText, LayoutDashboard, Moon, PanelLeft, Settings, Sun, Users } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Separator } from '../ui/separator';
 import { Switch } from '../ui/switch';
+import useThemes from '@/stores/hooks/useThemes';
+import useMounted from '@/stores/hooks/useMounted';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select';
+import { SelectValue } from '@radix-ui/react-select';
+import { ThemeCollors } from '@/interfaces/theme.interface';
 
 export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [theme, setTheme] = useState<'dark' | 'light'>('light');
   const { toggleSidebar } = useSidebar();
+  const isMounted = useMounted();
+  const { themeColor, setThemeColor, themeMode, setThemeMode } = useThemes();
 
   const menuItems = [
     {
@@ -67,7 +73,10 @@ export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+              <div
+                className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary
+                  text-sidebar-primary-foreground"
+              >
                 <FileText className="h-6 w-6" />
               </div>
               <div className="flex items-center space-x-2">
@@ -103,25 +112,43 @@ export function SideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       <Separator />
 
-      <SidebarFooter>
-        <SidebarGroupLabel>Theme [WIP]</SidebarGroupLabel>
+      {isMounted && (
+        <SidebarFooter>
+          <SidebarGroupLabel>Theme</SidebarGroupLabel>
 
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <div className="flex items-center justify-start gap-5">
-                <Sun className="h-4 w-4" />
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                {isMounted && (
+                  <div className="flex items-center justify-start gap-5">
+                    <Sun className="h-4 w-4" />
+                    <Switch
+                      checked={themeMode === 'dark'}
+                      onCheckedChange={() => setThemeMode(themeMode === 'dark' ? 'light' : 'dark')}
+                    />
+                    <Moon className="h-4 w-4" />
+                  </div>
+                )}
+              </SidebarMenuButton>
+            </SidebarMenuItem>
 
-                <Switch
-                  checked={theme === 'dark'}
-                  onCheckedChange={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                />
-                <Moon className="h-4 w-4" />
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
+            <SidebarMenuItem>
+              <Select
+                onValueChange={(value) => setThemeColor(value as ThemeCollors)}
+                defaultValue={themeColor}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="blue">Blue</SelectItem>
+                  <SelectItem value="red">Red</SelectItem>
+                </SelectContent>
+              </Select>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+      )}
       <SidebarRail />
     </Sidebar>
   );
