@@ -13,8 +13,9 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const isMounted = useMounted();
 
   const getSavedThemeColor = (): ThemeCollors => {
-    if (isMounted) {
-      return (localStorage.getItem('themeColor') as ThemeCollors) || 'blue';
+    if (typeof window !== 'undefined') {
+      const savedColor = localStorage.getItem('themeColor') as ThemeCollors;
+      return savedColor || 'blue';
     }
     return 'blue';
   };
