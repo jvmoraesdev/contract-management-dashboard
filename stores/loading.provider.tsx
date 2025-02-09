@@ -1,6 +1,6 @@
 'use client';
 
-import { ChildrenProps, LoadingStateProps } from '@/interfaces/general.inteface';
+import { ChildrenProps, LoadingStateProps } from '@/interfaces/general.interface';
 import React, { createContext, useEffect, useState } from 'react';
 import useMounted from './hooks/useMounted';
 import LoadingOverlay from '@/components/shared/LoadingOverlay';

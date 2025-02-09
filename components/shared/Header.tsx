@@ -2,7 +2,7 @@ import useMobile from '@/stores/hooks/useMobile';
 import React from 'react';
 import { useSidebar } from '../ui/sidebar';
 import { Menu } from 'lucide-react';
-import { ChildrenProps } from '@/interfaces/general.inteface';
+import { ChildrenProps } from '@/interfaces/general.interface';
 import {
   Accordion,
   AccordionContent,

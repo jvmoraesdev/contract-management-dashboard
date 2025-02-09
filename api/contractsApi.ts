@@ -1,7 +1,7 @@
 import { Contract, ContractWithId, Status, Type } from '@/interfaces/contracts.interface';
 import mocked from './__mock__.json';
 import axios from 'axios';
-import { Response } from '@/interfaces/general.inteface';
+import { Response } from '@/interfaces/general.interface';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const instance = axios.create({
