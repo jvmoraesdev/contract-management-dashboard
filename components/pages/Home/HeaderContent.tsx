@@ -108,7 +108,7 @@ export const HeaderContent = ({
         variant="outline"
         size="icon"
         onClick={resetFilters}
-        className={`${hasActiveFilters ? 'visible' : 'hidden'} h-8_5 text-red-500`}
+        className={`${hasActiveFilters ? 'visible' : 'hidden'} h-8_5 text-destructive`}
         title="Limpar filtros"
       >
         <FilterX />
