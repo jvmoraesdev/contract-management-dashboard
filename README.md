@@ -108,11 +108,29 @@ The API was mocked for development, providing endpoints for:
 
 ## Installation Instructions
 
+### Local
+
 1. Clone the repository
 
 ```bash
 git clone https://github.com/jvmoraesdev/contract-management-dashboard.git
 ```
+
+2. Install the dependencies
+
+```bash
+yarn
+```
+
+3. Run the application
+
+```bash
+yarn dev
+```
+
+Access: http://localhost:3000
+
+### Docker (Slower)
 
 2. Install the dependencies
 
@@ -157,16 +175,19 @@ Access: http://localhost:3000
 ### Responsiveness
 
 **Challenge:** Adaptation to multiple devices
+
 **Solution:** Flexible design system and consistent breakpoints
 
 ### Global State Management
 
 **Challenge:** Complex state management
+
 **Solution:** Use of Context API and custom hooks
 
 ### Code Review
 
 **Challenge:** Constant code review for quality improvement
+
 **Solution:** Improvement in prompts for AI, use of lint and prettier tools for code maintenance
 
 ## Next Steps

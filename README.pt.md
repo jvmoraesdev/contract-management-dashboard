@@ -108,6 +108,24 @@ A API foi mockada para desenvolvimento, oferecendo endpoints para:
 
 ## Instruções de Instalação
 
+### Local
+
+#### Instalação de Dependências
+
+```bash
+yarn
+```
+
+#### Inicie a aplicação
+
+```bash
+yarn dev
+```
+
+Acesse: http://localhost:3000
+
+#### Docker (Mais lento)
+
 1. Clone o repositório
 
 ```bash
@@ -157,16 +175,19 @@ Acesse: http://localhost:3000
 ### Responsividade
 
 **Desafio:** Adaptação para múltiplos dispositivos
+
 **Solução:** Design system flexível e breakpoints consistentes
 
 ### Estado Global
 
 **Desafio:** Gerenciamento complexo de estado
+
 **Solução:** Uso de Context API e custom hooks
 
 ### Revisão de código
 
 **Desafio:** Revisão de código constante para melhoria de qualidade
+
 **Solução:** Melhora nos prompts para a IA, uso de ferramentas de lint e prettier para manutenção do código
 
 ## Próximos Passos
