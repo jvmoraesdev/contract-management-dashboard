@@ -114,7 +114,13 @@ A API foi mockada para desenvolvimento, oferecendo endpoints para:
 git clone https://github.com/jvmoraesdev/contract-management-dashboard.git
 ```
 
-2. Crie um container docker
+2. Instale as dependências
+
+```bash
+yarn
+```
+
+3. Crie um container docker
 
 ```bash
 docker compose up
