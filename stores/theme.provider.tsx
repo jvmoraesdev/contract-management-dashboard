@@ -15,9 +15,9 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const getSavedThemeColor = (): ThemeCollors => {
     if (typeof window !== 'undefined') {
       const savedColor = localStorage.getItem('themeColor') as ThemeCollors;
-      return savedColor || 'blue';
+      return savedColor || 'default';
     }
-    return 'blue';
+    return 'default';
   };
 
   const [themeColor, setThemeColor] = useState<ThemeCollors>(getSavedThemeColor());

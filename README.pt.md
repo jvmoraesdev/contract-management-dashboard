@@ -5,7 +5,7 @@ Este projeto tem como objetivo fornecer uma interface interativa e intuitiva par
 [[Inglês](README.md) | [Português](README.pt.md)]
 
 <p align="center">
-  <img src="dashboard.png" alt="Dashboard de Contratos" width="1000"/>
+  <img src="dashboard.gif" alt="Dashboard de Contratos" width="1000"/>
 </p>
 
 <h2 align="center">Índice</h2>
@@ -40,10 +40,15 @@ A aplicação oferece uma interface intuitiva para gerenciamento de contratos, i
   - Contém ordenação, filtragem e paginação.
 
 - Interatividade com o usuário:
+
   - Modal com listagem de contratos filtrados por métricas.
   - Modal com detalhes dos contratos selecionados.
   - Permite adição, edição e exclusão de contratos.
   - Filtros globais para refinar os dados do dashboard.
+
+- Outras funcionalidades:
+  - Modo escuro
+  - Vários temas de cores
 
 ## Estrutura do Projeto
 
@@ -55,6 +60,7 @@ O projeto segue uma estrutura modular e reutilizável, com componentes separados
 ├── app/            # Configuração principal e páginas da aplicação
 ├── components/     # Componentes reutilizáveis
 │  ├─ shared        # Componentes compartilhados
+│  ├─ pages         # Componentes de páginas
 │  └─ ui            # Componentes de UI
 ├── interfaces      # Tipagem de dados
 ├── public          # Arquivos estáticos
@@ -108,16 +114,10 @@ A API foi mockada para desenvolvimento, oferecendo endpoints para:
 git clone https://github.com/jvmoraesdev/contract-management-dashboard.git
 ```
 
-2. Instale as dependências
+2. Crie um container docker
 
 ```bash
-yarn
-```
-
-3. Inicie o projeto
-
-```bash
-yarn dev
+docker compose up
 ```
 
 Acesse: http://localhost:3000
@@ -165,12 +165,11 @@ Acesse: http://localhost:3000
 
 ## Próximos Passos
 
-- Adicionar o ambiente docker e deploy
 - Aumentar a cobertura de testes
 - Adição da biblioteca de internacionalização
-- Implementação de dark mode e/ou multiplos temas
 - Integração com APIs reais
-- Adicionar feedbacks de usuários (loading, toast, etc)
+- Adicionar feedbacks de usuários via toast
+- Adicionar a tela de carregamento para chamadas de API
 
 ## Dúvidas e Suporte
 

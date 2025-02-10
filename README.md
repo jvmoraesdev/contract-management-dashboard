@@ -5,7 +5,7 @@ This project aims to provide an interactive and intuitive interface to visualize
 [[English](README.md) | [Portuguese](README.pt.md)]
 
 <p align="center">
-  <img src="dashboard.png" alt="Contract Dashboard" width="1000"/>
+  <img src="dashboard.gif" alt="Contract Dashboard" width="1000"/>
 </p>
 
 <h2 align="center">Table of Contents</h2>
@@ -40,10 +40,15 @@ The application offers an intuitive interface for contract management, including
   - Contains sorting, filtering and pagination.
 
 - User Interactivity:
+
   - Modal with contract listing filtered by metrics.
   - Modal with selected contract details.
   - Allows adding, editing and deleting contracts.
   - Global filters to refine dashboard data.
+
+- Other features:
+  - Dark mode
+  - Multiple color themes
 
 ## Project Structure
 
@@ -55,6 +60,7 @@ The project follows a modular and reusable structure, with components separated 
 ├── app/            # Main configuration and application pages
 ├── components/     # Reusable components
 │  ├─ shared        # Shared components
+│  ├─ pages         # Pages components
 │  └─ ui            # UI components
 ├── interfaces      # Data typing
 ├── public          # Static files
@@ -108,16 +114,10 @@ The API was mocked for development, providing endpoints for:
 git clone https://github.com/jvmoraesdev/contract-management-dashboard.git
 ```
 
-2. Install the dependencies
+2. Create a docker container
 
 ```bash
-yarn
-```
-
-3. Start the project
-
-```bash
-yarn dev
+docker compose up
 ```
 
 Access: http://localhost:3000
@@ -165,12 +165,11 @@ Access: http://localhost:3000
 
 ## Next Steps
 
-- Add docker environment and deploy
 - Increase test coverage
 - Add internationalization library
-- Implement dark mode and/or multiple themes
 - Integrate with real APIs
-- Add user feedbacks (loading indicators, toast, etc)
+- Add user feedback via toast notifications
+- Add the loading screen for API calls
 
 ## Support and Questions
 
