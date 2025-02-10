@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import useMounted from '@/stores/hooks/useMounted';
 
 interface DatePickerWithRangeProps {
   from: Date;
@@ -29,15 +30,30 @@ const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
   disabled,
   className
 }) => {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from,
-    to
-  });
+  const isMounted = useMounted();
+  const [date, setDate] = React.useState<DateRange | undefined>();
 
   // Atualiza o estado local quando as props mudam
   React.useEffect(() => {
-    setDate({ from, to });
-  }, [from, to]);
+    if (isMounted) {
+      setDate({ from, to });
+    }
+  }, [from, to, isMounted]);
+
+  // Não renderiza nada até que o componente esteja montado
+  if (!isMounted) {
+    return (
+      <Button
+        id="date"
+        variant={'outline'}
+        disabled={true}
+        className={cn('w-full justify-start text-left font-normal', 'text-muted-foreground')}
+      >
+        <CalendarIcon className="mr-2 h-4 w-4" />
+        <span>Carregando...</span>
+      </Button>
+    );
+  }
 
   return (
     <div className={cn('grid gap-2', className)}>
