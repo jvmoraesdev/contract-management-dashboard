@@ -1,12 +1,12 @@
 services:
-  dev-app:
+  app:
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
 
     ports:
       - '3000:3000'
     volumes:
-      - .:/usr/src/app
+      - .:/app
     env_file:
       - .env.development
