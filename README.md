@@ -5,7 +5,7 @@ This project aims to provide an interactive and intuitive interface to visualize
 [[English](README.md) | [Portuguese](README.pt.md)]
 
 <p align="center">
-  <img src="dashboard.png" alt="Contract Dashboard" width="1000"/>
+  <img src="dashboard.gif" alt="Contract Dashboard" width="1000"/>
 </p>
 
 <h2 align="center">Table of Contents</h2>

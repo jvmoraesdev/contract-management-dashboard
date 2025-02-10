@@ -5,7 +5,7 @@ Este projeto tem como objetivo fornecer uma interface interativa e intuitiva par
 [[Inglês](README.md) | [Português](README.pt.md)]
 
 <p align="center">
-  <img src="dashboard.png" alt="Dashboard de Contratos" width="1000"/>
+  <img src="dashboard.gif" alt="Dashboard de Contratos" width="1000"/>
 </p>
 
 <h2 align="center">Índice</h2>
