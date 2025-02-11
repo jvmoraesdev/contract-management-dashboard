@@ -1,6 +1,6 @@
 'use client';
 
-import { ThemeCollors, ThemeColorStateProps, ThemeMode } from '@/interfaces/theme.interface';
+import { ThemeColors, ThemeColorStateProps, ThemeMode } from '@/interfaces/theme.interface';
 import { useTheme } from 'next-themes';
 import { ThemeProviderProps } from 'next-themes';
 import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -12,15 +12,15 @@ export const ThemeContext = createContext<ThemeColorStateProps>({} as ThemeColor
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const isMounted = useMounted();
 
-  const getSavedThemeColor = (): ThemeCollors => {
+  const getSavedThemeColor = (): ThemeColors => {
     if (typeof window !== 'undefined') {
-      const savedColor = localStorage.getItem('themeColor') as ThemeCollors;
+      const savedColor = localStorage.getItem('themeColor') as ThemeColors;
       return savedColor || 'default';
     }
     return 'default';
   };
 
-  const [themeColor, setThemeColor] = useState<ThemeCollors>(getSavedThemeColor());
+  const [themeColor, setThemeColor] = useState<ThemeColors>(getSavedThemeColor());
   const { theme: themeMode, setTheme: setThemeMode } = useTheme();
 
   useEffect(() => {

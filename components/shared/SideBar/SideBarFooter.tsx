@@ -15,7 +15,7 @@ import {
   SidebarMenuButton
 } from '@/components/ui/sidebar';
 import { Switch } from '@/components/ui/switch';
-import { ThemeCollors } from '@/interfaces/theme.interface';
+import { ThemeColors } from '@/interfaces/theme.interface';
 import useMounted from '@/stores/hooks/useMounted';
 import useThemes from '@/stores/hooks/useThemes';
 import { Moon, Sun } from 'lucide-react';
@@ -47,7 +47,7 @@ const SideBarFooter = () => {
 
         <SidebarMenuItem>
           <Select
-            onValueChange={(value) => setThemeColor(value as ThemeCollors)}
+            onValueChange={(value) => setThemeColor(value as ThemeColors)}
             defaultValue={themeColor}
           >
             <SelectTrigger>
