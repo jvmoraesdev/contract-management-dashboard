@@ -147,8 +147,8 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                   {...form.register('name')}
                   disabled={viewOnly}
                   className={cn(
-                    isFieldModified('name') && 'border-alert',
                     form.formState.errors.name && 'border-destructive',
+                    isFieldModified('name') && 'border-alert',
                     viewOnly && 'bg-muted-foreground'
                   )}
                 />
@@ -167,7 +167,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                 >
                   <SelectTrigger
                     className={cn(
-                      isFieldModified('type') && 'border-destructive',
+                      isFieldModified('type') && 'border-alert',
                       form.formState.errors.type && 'border-destructive',
                       viewOnly && 'bg-muted-foreground'
                     )}
@@ -212,7 +212,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="value">Valor do Contrato</Label>
+              <Label htmlFor="value">Valor do Contrato (R$)</Label>
               <Input
                 id="value"
                 placeholder="Digite o valor do contrato"

@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown } from 'lucide-react';
 import useContracts from '@/stores/hooks/useContracts';
-import { ContractWithId } from '@/interfaces/contracts.interface';
+import { ContractWithId, Contract } from '@/interfaces/contracts.interface';
 import {
   useReactTable,
   getCoreRowModel,
@@ -33,7 +33,7 @@ import { getColumns } from './TableConfig';
 import ContractDialog from '../ContractDialog';
 
 interface ContractsTableProps {
-  onEditAction?: (contract: ContractWithId) => void;
+  onEditAction?: (contract: ContractWithId | Contract) => void;
   onDeleteAction?: (id: string) => void;
   noActions?: boolean;
   initialFilter?: string;

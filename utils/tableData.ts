@@ -9,11 +9,11 @@ export const getTypeName = (types: Type[], typeId: number) => {
 };
 
 export const getStatusStyle = (statusId: number) => {
-  const styles: Record<number, string> = {
-    1: 'bg-green-100 text-green-800',
-    2: 'bg-red-100 text-red-800',
-    3: 'bg-yellow-100 text-yellow-800',
-    4: 'bg-orange-100 text-orange-800'
+  const styles: Record<number, { backgroundColor: string; color: string }> = {
+    1: { backgroundColor: '#dcfce7', color: '#166534' }, // green
+    2: { backgroundColor: '#fee2e2', color: '#991b1b' }, // red
+    3: { backgroundColor: '#fef9c3', color: '#854d0e' }, // yellow
+    4: { backgroundColor: '#ffedd5', color: '#9a3412' } // orange
   };
-  return styles[statusId] || '';
+  return styles[statusId] || { backgroundColor: '#f3f4f6', color: '#374151' };
 };
