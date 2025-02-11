@@ -19,7 +19,7 @@ export const ChartCardContainer: React.FC<ChartContainerProps> = ({
     <Card className={cn('flex h-[300px] flex-col', className)}>
       <CardHeader className="items-center pb-1">
         {title && (
-          <CardTitle>
+          <CardTitle className="flex items-center gap-2">
             {title} {action}
           </CardTitle>
         )}

@@ -1,6 +1,6 @@
-import { ThemeCollors } from '@/interfaces/general.inteface';
+import { ThemeColors } from '@/interfaces/theme.interface';
 
-const themes = {
+export const themes = {
   default: {
     light: {
       background: '0 0% 100%', // #FFFFFF
@@ -292,7 +292,7 @@ const themes = {
 
 export default function setGlobalColorTheme(
   themeMode: 'light' | 'dark' = 'dark',
-  color: ThemeCollors
+  color: ThemeColors
 ) {
   const theme = themes[color][themeMode] as {
     [key: string]: string;

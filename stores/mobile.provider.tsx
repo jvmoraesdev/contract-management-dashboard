@@ -6,7 +6,7 @@ interface MobileContextType {
   isMobile: boolean;
 }
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 1280;
 
 export const MobileContext = createContext<MobileContextType | undefined>(undefined);
 

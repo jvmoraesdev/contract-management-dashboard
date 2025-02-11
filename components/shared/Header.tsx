@@ -15,11 +15,11 @@ export const Header = ({ children }: ChildrenProps) => {
   const { isMobile } = useMobile();
 
   return (
-    <div className="flex flex-col items-center justify-between md:flex-row">
-      <div className="flex w-full items-center justify-between md:w-auto">
+    <div className="flex flex-col items-center justify-between xl:flex-row">
+      <div className="flex w-full items-center justify-between xl:w-auto">
         <button
           onClick={toggleSidebar}
-          className="-ml-2 mr-2 rounded-md p-2 hover:bg-accent md:hidden"
+          className="-ml-2 mr-2 rounded-md p-2 hover:bg-accent xl:hidden"
         >
           <Menu className="h-6 w-6" />
         </button>

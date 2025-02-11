@@ -117,8 +117,8 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           </Button>
         </DialogTrigger>
       )}
-      <DialogContent className="bg-popover sm:max-w-[600px]">
-        <DialogHeader>
+      <DialogContent className="bg-popover sm:max-w-[600px] flex flex-col max-h-[90vh] p-0">
+        <DialogHeader className="p-6 pb-0">
           <DialogTitle>
             {viewOnly
               ? 'Visualizar Contrato'
@@ -127,157 +127,161 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                 : 'Adicionar Contrato'}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-          {isEditing && (
-            <div className="space-y-2">
-              <Label htmlFor="id">ID do Contrato</Label>
-              <Input id="id" {...form.register('id')} disabled className="bg-muted-foreground" />
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="flex flex-col flex-1 overflow-hidden"
+        >
+          <div className="space-y-6 p-6 pt-2 overflow-y-auto">
+            {isEditing && (
+              <div className="space-y-2">
+                <Label htmlFor="id">ID do Contrato</Label>
+                <Input id="id" {...form.register('id')} disabled className="bg-muted-foreground" />
+              </div>
+            )}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Nome do Contrato</Label>
+                <Input
+                  id="name"
+                  placeholder="Digite o nome do contrato"
+                  {...form.register('name')}
+                  disabled={viewOnly}
+                  className={cn(
+                    form.formState.errors.name && 'border-destructive',
+                    isFieldModified('name') && 'border-alert',
+                    viewOnly && 'bg-muted-foreground'
+                  )}
+                />
+                {form.formState.errors.name && (
+                  <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="type">Tipo de Contrato</Label>
+                <Select
+                  value={watchedType?.toString()}
+                  onValueChange={(value) =>
+                    form.setValue('type', Number(value), { shouldDirty: true })
+                  }
+                  disabled={viewOnly}
+                >
+                  <SelectTrigger
+                    className={cn(
+                      isFieldModified('type') && 'border-alert',
+                      form.formState.errors.type && 'border-destructive',
+                      viewOnly && 'bg-muted-foreground'
+                    )}
+                  >
+                    <SelectValue placeholder="Selecione o tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {type.map((selectedType) => (
+                      <SelectItem key={selectedType.id} value={selectedType.id.toString()}>
+                        {selectedType.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {form.formState.errors.type && (
+                  <p className="text-sm text-destructive">{form.formState.errors.type.message}</p>
+                )}
+              </div>
             </div>
-          )}
-          <div className="grid grid-cols-2 gap-4">
+
             <div className="space-y-2">
-              <Label htmlFor="name">Nome do Contrato</Label>
+              <Label>Período do Contrato</Label>
+              <DatePickerWithRange
+                from={form.watch('startDate')}
+                to={form.watch('endDate')}
+                onSelect={(range) => {
+                  if (range?.from) {
+                    form.setValue('startDate', range.from, { shouldDirty: true });
+                  }
+                  if (range?.to) {
+                    form.setValue('endDate', range.to, { shouldDirty: true });
+                  }
+                }}
+                isModified={isFieldModified('startDate') || isFieldModified('endDate')}
+                hasError={!!form.formState.errors.startDate || !!form.formState.errors.endDate}
+                disabled={viewOnly}
+                className={cn('rounded-md', viewOnly && 'bg-muted-foreground')}
+              />
+              {(form.formState.errors.startDate || form.formState.errors.endDate) && (
+                <p className="text-sm text-destructive">Data inválida</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="value">Valor do Contrato (R$)</Label>
               <Input
-                id="name"
-                placeholder="Digite o nome do contrato"
-                {...form.register('name')}
+                id="value"
+                placeholder="Digite o valor do contrato"
+                type="number"
+                {...form.register('value', { valueAsNumber: true })}
                 disabled={viewOnly}
                 className={cn(
-                  isFieldModified('name') && 'border-alert',
-                  form.formState.errors.name && 'border-destructive',
+                  isFieldModified('value') && 'border-alert',
+                  form.formState.errors.value && 'border-destructive',
                   viewOnly && 'bg-muted-foreground'
                 )}
               />
-              {form.formState.errors.name && (
-                <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>
+              {form.formState.errors.value && (
+                <p className="text-sm text-destructive">{form.formState.errors.value.message}</p>
               )}
             </div>
+
             <div className="space-y-2">
-              <Label htmlFor="type">Tipo de Contrato</Label>
+              <Label htmlFor="clientOrSupplier">Cliente/Fornecedor</Label>
+              <Input
+                id="clientOrSupplier"
+                placeholder="Digite o nome do cliente ou fornecedor"
+                {...form.register('clientOrSupplier')}
+                disabled={viewOnly}
+                className={cn(
+                  isFieldModified('clientOrSupplier') && 'border-alert',
+                  form.formState.errors.clientOrSupplier && 'border-destructive',
+                  viewOnly && 'bg-muted-foreground'
+                )}
+              />
+              {form.formState.errors.clientOrSupplier && (
+                <p className="text-sm text-destructive">
+                  {form.formState.errors.clientOrSupplier.message}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="status">Status</Label>
               <Select
-                value={watchedType?.toString()}
+                value={watchedStatus?.toString()}
                 onValueChange={(value) =>
-                  form.setValue('type', Number(value), { shouldDirty: true })
+                  form.setValue('status', Number(value), { shouldDirty: true })
                 }
                 disabled={viewOnly}
               >
                 <SelectTrigger
                   className={cn(
-                    isFieldModified('type') && 'border-destructive',
-                    form.formState.errors.type && 'border-destructive',
+                    isFieldModified('status') && 'border-alert',
+                    form.formState.errors.status && 'border-destructive',
                     viewOnly && 'bg-muted-foreground'
                   )}
                 >
-                  <SelectValue placeholder="Selecione o tipo" />
+                  <SelectValue placeholder="Selecione o status" />
                 </SelectTrigger>
                 <SelectContent>
-                  {type.map((selectedType) => (
-                    <SelectItem key={selectedType.id} value={selectedType.id.toString()}>
-                      {selectedType.name}
+                  {status.map((selectedStatus) => (
+                    <SelectItem key={selectedStatus.id} value={selectedStatus.id.toString()}>
+                      {selectedStatus.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {form.formState.errors.type && (
-                <p className="text-sm text-destructive">{form.formState.errors.type.message}</p>
+              {form.formState.errors.status && (
+                <p className="text-sm text-destructive">{form.formState.errors.status.message}</p>
               )}
             </div>
           </div>
-
-          <div className="space-y-2">
-            <Label>Período do Contrato</Label>
-            <DatePickerWithRange
-              from={form.watch('startDate')}
-              to={form.watch('endDate')}
-              onSelect={(range) => {
-                if (range?.from) {
-                  form.setValue('startDate', range.from, { shouldDirty: true });
-                }
-                if (range?.to) {
-                  form.setValue('endDate', range.to, { shouldDirty: true });
-                }
-              }}
-              isModified={isFieldModified('startDate') || isFieldModified('endDate')}
-              hasError={!!form.formState.errors.startDate || !!form.formState.errors.endDate}
-              disabled={viewOnly}
-              className={cn('rounded-md', viewOnly && 'bg-muted-foreground')}
-            />
-            {(form.formState.errors.startDate || form.formState.errors.endDate) && (
-              <p className="text-sm text-destructive">Data inválida</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="value">Valor do Contrato</Label>
-            <Input
-              id="value"
-              placeholder="Digite o valor do contrato"
-              type="number"
-              {...form.register('value', { valueAsNumber: true })}
-              disabled={viewOnly}
-              className={cn(
-                isFieldModified('value') && 'border-alert',
-                form.formState.errors.value && 'border-destructive',
-                viewOnly && 'bg-muted-foreground'
-              )}
-            />
-            {form.formState.errors.value && (
-              <p className="text-sm text-destructive">{form.formState.errors.value.message}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="clientOrSupplier">Cliente/Fornecedor</Label>
-            <Input
-              id="clientOrSupplier"
-              placeholder="Digite o nome do cliente ou fornecedor"
-              {...form.register('clientOrSupplier')}
-              disabled={viewOnly}
-              className={cn(
-                isFieldModified('clientOrSupplier') && 'border-alert',
-                form.formState.errors.clientOrSupplier && 'border-destructive',
-                viewOnly && 'bg-muted-foreground'
-              )}
-            />
-            {form.formState.errors.clientOrSupplier && (
-              <p className="text-sm text-destructive">
-                {form.formState.errors.clientOrSupplier.message}
-              </p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="status">Status</Label>
-            <Select
-              value={watchedStatus?.toString()}
-              onValueChange={(value) =>
-                form.setValue('status', Number(value), { shouldDirty: true })
-              }
-              disabled={viewOnly}
-            >
-              <SelectTrigger
-                className={cn(
-                  isFieldModified('status') && 'border-alert',
-                  form.formState.errors.status && 'border-destructive',
-                  viewOnly && 'bg-muted-foreground'
-                )}
-              >
-                <SelectValue placeholder="Selecione o status" />
-              </SelectTrigger>
-              <SelectContent>
-                {status.map((selectedStatus) => (
-                  <SelectItem key={selectedStatus.id} value={selectedStatus.id.toString()}>
-                    {selectedStatus.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {form.formState.errors.status && (
-              <p className="text-sm text-destructive">{form.formState.errors.status.message}</p>
-            )}
-          </div>
-
-          <DialogFooter>
+          <DialogFooter className="p-6 pt-0">
             {viewOnly ? (
               <Button type="button" onClick={() => onOpenChange(false)}>
                 Fechar

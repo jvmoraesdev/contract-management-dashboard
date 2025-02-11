@@ -5,7 +5,6 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronUp, ChevronsUpDown, MoreVertical } from 'lucide-react';
 import { getStatusName, getTypeName, getStatusStyle } from '@/utils/tableData';
-import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -91,10 +90,11 @@ export const getColumns = ({
         const styleClass = getStatusStyle(statusId);
         return (
           <span
-            className={cn(
-              'bg-white-100 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-black',
-              styleClass
-            )}
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${styleClass}`}
+            style={{
+              backgroundColor: styleClass.backgroundColor,
+              color: styleClass.color
+            }}
           >
             {getStatusName(status, statusId)}
           </span>
@@ -190,7 +190,7 @@ export const getColumns = ({
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => onEdit(contract)}>Editar</DropdownMenuItem>
                 <DropdownMenuItem
-                  className="text-red-600"
+                  className="text-destructive"
                   onClick={() => onDelete(contract.id.toString())}
                 >
                   Excluir

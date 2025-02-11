@@ -6,8 +6,7 @@ import { ChartConfig, ChartTooltip, ChartTooltipContent } from '../../ui/chart';
 import React, { useState } from 'react';
 import { ChartDataProps } from '@/interfaces/chats.interface';
 import useMobile from '@/stores/hooks/useMobile';
-import { Button } from '@/components/ui/button';
-import { RefreshCcwDot } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const statusPieChartConfig = {
   contracts: {
@@ -59,16 +58,22 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, type
 
   return (
     <ChartCardContainer
-      title={chartType === 'status' ? 'Distribuição por Status' : 'Distribuição por Tipo'}
+      title="Distribuição por"
       labelConfig={chartType === 'status' ? statusPieChartConfig : typesPieChartConfig}
       action={
-        <Button
-          className="h-8 w-8"
-          variant="outline"
-          onClick={() => setChartType(chartType === 'status' ? 'type' : 'status')}
+        <Tabs
+          defaultValue="status"
+          onValueChange={(value) => setChartType(value as 'status' | 'type')}
         >
-          <RefreshCcwDot size={16} strokeWidth={2.0} />
-        </Button>
+          <TabsList className="grid h-8 w-32 grid-cols-2">
+            <TabsTrigger value="status" className="h-6">
+              Status
+            </TabsTrigger>
+            <TabsTrigger value="type" className="h-6">
+              Tipo
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       }
     >
       <ResponsiveContainer width="100%" height={300}>
@@ -105,7 +110,8 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, type
               gap: '0.5rem',
               flexWrap: isMobile ? 'wrap' : 'nowrap',
               justifyContent: isMobile ? 'center' : 'flex-start',
-              paddingTop: '10px'
+              paddingTop: '10px',
+              paddingBottom: isMobile ? '10px' : '0px'
             }}
             formatter={(value) => <span className="text-foreground">{value}</span>}
           />
