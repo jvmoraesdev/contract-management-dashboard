@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Switch } from '@/components/ui/switch';
 import { ThemeColors } from '@/interfaces/theme.interface';
+import { themes } from '@/lib/theme-colors';
 import useMounted from '@/stores/hooks/useMounted';
 import useThemes from '@/stores/hooks/useThemes';
 import { Moon, Sun } from 'lucide-react';
@@ -54,10 +55,19 @@ const SideBarFooter = () => {
               <SelectValue placeholder="Theme" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="default">Default</SelectItem>
-              <SelectItem value="sapphire">Sapphire</SelectItem>
-              <SelectItem value="ruby">Ruby</SelectItem>
-              <SelectItem value="emerald">Emerald</SelectItem>
+              {Object.keys(themes).map((theme) => (
+                <SelectItem key={theme} value={theme}>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="h-4 w-4 rounded-full flex items-center justify-center"
+                      style={{
+                        backgroundColor: `hsl(${themes[theme as keyof typeof themes][themeMode]['primary']})`
+                      }}
+                    />
+                    {theme}
+                  </div>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </SidebarMenuItem>

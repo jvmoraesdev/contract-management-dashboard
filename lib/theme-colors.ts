@@ -1,6 +1,6 @@
 import { ThemeColors } from '@/interfaces/theme.interface';
 
-const themes = {
+export const themes = {
   default: {
     light: {
       background: '0 0% 100%', // #FFFFFF
