@@ -13,6 +13,7 @@ import { Contract, ContractWithId } from '@/interfaces/contracts.interface';
 import useContracts from '@/stores/hooks/useContracts';
 import { ChevronDown, FilterX } from 'lucide-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderContentProps {
   date: { from: Date; to: Date };
@@ -46,6 +47,7 @@ export const HeaderContent = ({
   handleContractSubmit
 }: HeaderContentProps) => {
   const { status, type } = useContracts();
+  const { t } = useTranslation();
 
   return (
     <div className="grid grid-cols-1 gap-2 md:flex md:items-center">
@@ -70,14 +72,16 @@ export const HeaderContent = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => setStatusFilter(undefined)}>Todos</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setStatusFilter(undefined)}>
+            {t('common.all')}
+          </DropdownMenuItem>
           {status.map((s) => (
             <DropdownMenuItem
               key={s.id}
               onClick={() => setStatusFilter(s.id)}
               className={statusFilter === s.id ? 'bg-accent' : ''}
             >
-              {s.name}
+              {t(`common.${s.name}`)}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
@@ -86,19 +90,21 @@ export const HeaderContent = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="w-full sm:w-auto">
-            {typeFilter ? type.find((t) => t.id === typeFilter)?.name : 'Tipo'}{' '}
+            {typeFilter ? type.find((type) => type.id === typeFilter)?.name : t('common.type')}{' '}
             <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => setTypeFilter(undefined)}>Todos</DropdownMenuItem>
-          {type.map((t) => (
+          <DropdownMenuItem onClick={() => setTypeFilter(undefined)}>
+            {t('common.all')}
+          </DropdownMenuItem>
+          {type.map((type) => (
             <DropdownMenuItem
-              key={t.id}
-              onClick={() => setTypeFilter(t.id)}
-              className={typeFilter === t.id ? 'bg-accent' : ''}
+              key={type.id}
+              onClick={() => setTypeFilter(type.id)}
+              className={typeFilter === type.id ? 'bg-accent' : ''}
             >
-              {t.name}
+              {t(`common.${type.name}`)}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
@@ -109,7 +115,7 @@ export const HeaderContent = ({
         size="icon"
         onClick={resetFilters}
         className={`${hasActiveFilters ? 'visible' : 'hidden'} h-8_5 text-destructive`}
-        title="Limpar filtros"
+        title={t('actions.clearFilters')}
       >
         <FilterX />
       </Button>

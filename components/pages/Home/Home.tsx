@@ -155,8 +155,8 @@ const Home = () => {
           <ChartsSection />
 
           <ContractsTable
-            onEditAction={(contract) => {
-              setSelectedContract(contract);
+            onEditAction={(contract: Contract | ContractWithId) => {
+              setSelectedContract(contract as ContractWithId);
               setShowAddContract(true);
             }}
             onDeleteAction={(id) => handleDeleteContract(id)}
