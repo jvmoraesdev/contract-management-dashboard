@@ -10,17 +10,20 @@ import {
 } from '@/components/ui/sidebar';
 import { FileText, LayoutDashboard, PanelLeft, Settings, Users } from 'lucide-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SideBarContent = () => {
+  const { t } = useTranslation();
+
   const menuItems = [
     {
       icon: LayoutDashboard,
-      label: 'Dashboard',
+      label: t('common.dashboard'),
       active: true
     },
     {
       icon: FileText,
-      label: 'Contracts [WIP]',
+      label: `${t('common.contracts')} [WIP]`,
       active: false,
       onClick: () => {
         console.log('Feature in development');
@@ -28,7 +31,7 @@ const SideBarContent = () => {
     },
     {
       icon: Users,
-      label: 'Users [WIP]',
+      label: `${t('common.users')} [WIP]`,
       active: false,
       onClick: () => {
         console.log('Feature in development');
@@ -36,7 +39,7 @@ const SideBarContent = () => {
     },
     {
       icon: Settings,
-      label: 'Settings [WIP]',
+      label: `${t('common.settings')} [WIP]`,
       active: false,
       onClick: () => {
         console.log('Feature in development');
@@ -61,7 +64,7 @@ const SideBarContent = () => {
           <SidebarMenuItem>
             <SidebarMenuButton onClick={toggleSidebar}>
               <PanelLeft className="h-4 w-4" />
-              <span>Hide</span>
+              <span>{t('sidebar.hide')}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -44,7 +44,7 @@ const SideBarFooter = () => {
         </SidebarMenuItem>
       </SidebarMenu>
 
-      <SidebarGroupLabel>Theme Color</SidebarGroupLabel>
+      <SidebarGroupLabel>{t('sidebar.theme')}</SidebarGroupLabel>
 
       <SidebarMenu>
         <SidebarMenuItem>
@@ -83,7 +83,7 @@ const SideBarFooter = () => {
                         backgroundColor: `hsl(${themes[theme as keyof typeof themes][themeMode]['primary']})`
                       }}
                     />
-                    {theme}
+                    {t(`themes.${theme}`)}
                   </div>
                 </SelectItem>
               ))}

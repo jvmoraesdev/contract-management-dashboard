@@ -8,8 +8,11 @@ import {
 } from '@/components/ui/sidebar';
 import { FileText } from 'lucide-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SideBarHeader = () => {
+  const { t } = useTranslation();
+
   return (
     <Header>
       <SidebarMenu>
@@ -25,7 +28,7 @@ const SideBarHeader = () => {
               <FileText className="h-6 w-6" />
             </div>
             <div className="flex items-center space-x-2">
-              <span className="font-semibold">C. M. Dashboard</span>
+              <span className="font-semibold">{t('shortTitle')}</span>
             </div>
           </SidebarMenuButton>
         </SidebarMenuItem>
