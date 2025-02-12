@@ -9,6 +9,7 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider as NextThemeProvider } from 'next-themes';
 import ThemeProvider from '@/stores/theme.provider';
 import LoadingProvider from '@/stores/loading.provider';
+import MetadataTitle from '@/components/shared/MetadataTitle';
 
 const interFont = Inter({
   weight: ['400', '700'],
@@ -26,10 +27,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin']
 });
 
-export const metadata: Metadata = {
-  title: 'Contract Management Dashboard',
-  description: 'A dashboard for managing contracts'
-};
+export const metadata: Metadata = {};
 
 export default function RootLayout({
   children
@@ -37,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={interFont.className} suppressHydrationWarning>
+    <html lang="pt-BR" className={interFont.className} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LoadingProvider>
           <NextThemeProvider
@@ -49,7 +47,10 @@ export default function RootLayout({
             <ThemeProvider>
               <MobileProvider>
                 <SidebarProvider>
-                  <ContractsProvider>{children}</ContractsProvider>
+                  <ContractsProvider>
+                    <MetadataTitle />
+                    {children}
+                  </ContractsProvider>
                 </SidebarProvider>
               </MobileProvider>
             </ThemeProvider>
