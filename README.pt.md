@@ -5,7 +5,7 @@ Este projeto tem como objetivo fornecer uma interface interativa e intuitiva par
 [[Inglês](README.md) | [Português](README.pt.md)]
 
 <p align="center">
-  <img src="dashboard.gif" alt="Dashboard de Contratos" width="1000"/>
+  <img src="dashboard.pt.gif" alt="Dashboard de Contratos" width="1000"/>
 </p>
 
 <h2 align="center">Índice</h2>
@@ -169,6 +169,7 @@ Acesse: http://localhost:3000
 - Facilitação na escrita de testes;
 - Documentação mais consistente;
 - Resolução mais rápida de bugs;
+- Auxílio na identificação de textos e formatação de chaves de tradução.
 
 ## Desafios e Soluções
 
