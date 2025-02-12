@@ -7,58 +7,60 @@ import React, { useState } from 'react';
 import { ChartDataProps } from '@/interfaces/chats.interface';
 import useMobile from '@/stores/hooks/useMobile';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-const statusPieChartConfig = {
-  contracts: {
-    label: 'Contracts'
-  },
-  active: {
-    label: 'Ativo',
-    color: 'hsl(var(--chart-1))'
-  },
-  expired: {
-    label: 'Expirado',
-    color: 'hsl(var(--chart-2))'
-  },
-  pendingRenewal: {
-    label: 'Pendente de Renovação',
-    color: 'hsl(var(--chart-3))'
-  },
-  nearingExpiration: {
-    label: 'Próximo ao Vencimento',
-    color: 'hsl(var(--chart-4))'
-  }
-} satisfies ChartConfig;
-
-const typesPieChartConfig = {
-  contracts: {
-    label: 'Contracts'
-  },
-  service: {
-    label: 'Serviço',
-    color: 'hsl(var(--chart-1))'
-  },
-  supply: {
-    label: 'Fornecimento',
-    color: 'hsl(var(--chart-2))'
-  },
-  consulting: {
-    label: 'Consultoria',
-    color: 'hsl(var(--chart-3))'
-  },
-  IT: {
-    label: 'TI',
-    color: 'hsl(var(--chart-4))'
-  }
-} satisfies ChartConfig;
+import { useTranslation } from 'react-i18next';
 
 export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, typeData }) => {
+  const { t } = useTranslation('');
   const [chartType, setChartType] = useState<'status' | 'type'>('status');
   const { isMobile } = useMobile();
 
+  const statusPieChartConfig = {
+    contracts: {
+      label: t('common.contracts')
+    },
+    active: {
+      label: t('common.status.Ativo'),
+      color: 'hsl(var(--chart-1))'
+    },
+    expired: {
+      label: t('common.status.Expirado'),
+      color: 'hsl(var(--chart-2))'
+    },
+    pendingRenewal: {
+      label: t('common.status.Pendente de Renovação'),
+      color: 'hsl(var(--chart-3))'
+    },
+    nearingExpiration: {
+      label: t('common.status.Próximo ao Vencimento'),
+      color: 'hsl(var(--chart-4))'
+    }
+  } satisfies ChartConfig;
+
+  const typesPieChartConfig = {
+    contracts: {
+      label: t('common.contracts')
+    },
+    service: {
+      label: t('common.type.Serviço'),
+      color: 'hsl(var(--chart-1))'
+    },
+    supply: {
+      label: t('common.type.Fornecimento'),
+      color: 'hsl(var(--chart-2))'
+    },
+    consulting: {
+      label: t('common.type.Consultoria'),
+      color: 'hsl(var(--chart-3))'
+    },
+    IT: {
+      label: t('common.type.TI'),
+      color: 'hsl(var(--chart-4))'
+    }
+  } satisfies ChartConfig;
+
   return (
     <ChartCardContainer
-      title="Distribuição por"
+      title={t('charts.distributionBy')}
       labelConfig={chartType === 'status' ? statusPieChartConfig : typesPieChartConfig}
       action={
         <Tabs
@@ -67,10 +69,10 @@ export const ContractStatusChart: React.FC<ChartDataProps> = ({ statusData, type
         >
           <TabsList className="grid h-8 w-32 grid-cols-2">
             <TabsTrigger value="status" className="h-6">
-              Status
+              {t('common.status.status')}
             </TabsTrigger>
             <TabsTrigger value="type" className="h-6">
-              Tipo
+              {t('common.type.type')}
             </TabsTrigger>
           </TabsList>
         </Tabs>
