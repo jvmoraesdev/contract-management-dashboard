@@ -33,8 +33,8 @@ const ProjectTableDialog: React.FC<ProjectTableDialogProps> = ({ open, onOpenCha
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[90vw]">
-        <DialogHeader>
-          <DialogTitle>{getTitleByFilter()}</DialogTitle>
+        <DialogHeader className="p-4">
+          <DialogTitle className="text-xl font-semibold">{getTitleByFilter()}</DialogTitle>
         </DialogHeader>
         <div className="overflow-x-auto">
           <ContractsTable noActions initialFilter={filter} />

@@ -189,7 +189,7 @@ export const getColumns = ({
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" sideOffset={4} className="z-[100]" forceMount>
                 <DropdownMenuItem onClick={() => onEdit(contract)}>
                   {t('actions.edit')}
                 </DropdownMenuItem>

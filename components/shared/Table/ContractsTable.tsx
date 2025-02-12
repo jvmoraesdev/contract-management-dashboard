@@ -89,12 +89,12 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
 
   const filteredData = React.useMemo(() => {
     const filtered = contracts.filter((contract) => {
-      const matchesStatus = statusFilter ? contract.status === statusFilter : true;
+      const matchesStatus = statusFilter
+        ? contract.status === statusFilter
+        : initialFilter === 'expiringSoon'
+          ? contract.status === 4
+          : true;
       const matchesType = typeFilter ? contract.type === typeFilter : true;
-
-      if (initialFilter === 'expiringSoon') {
-        return contract.status === 4;
-      }
 
       return matchesStatus && matchesType;
     });
@@ -151,7 +151,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
                     {t('common.status.status')} <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent sideOffset={4} className="z-[100]" forceMount>
                   <DropdownMenuItem onClick={() => setStatusFilter(undefined)}>
                     {t('common.all')}
                   </DropdownMenuItem>
@@ -168,7 +168,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
                     {t('common.type.type')} <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent sideOffset={4} className="z-[100]" forceMount>
                   <DropdownMenuItem onClick={() => setTypeFilter(undefined)}>
                     {t('common.all')}
                   </DropdownMenuItem>
