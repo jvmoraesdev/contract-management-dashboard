@@ -11,7 +11,7 @@ interface MetricCardProps {
   icon: React.ReactNode;
 }
 
-const MetricCard = ({ title = 'Metric', value = '0', change = 0, icon }: MetricCardProps) => {
+const MetricCard = ({ title, value, change, icon }: MetricCardProps) => {
   const isPositive = change >= 0;
 
   return (
