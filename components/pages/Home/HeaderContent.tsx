@@ -81,7 +81,7 @@ export const HeaderContent = ({
               onClick={() => setStatusFilter(s.id)}
               className={statusFilter === s.id ? 'bg-accent' : ''}
             >
-              {t(`common.${s.name}`)}
+              {t(`common.status.${s.name}`)}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
@@ -90,7 +90,7 @@ export const HeaderContent = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="w-full sm:w-auto">
-            {typeFilter ? type.find((type) => type.id === typeFilter)?.name : t('common.type')}{' '}
+            {typeFilter ? type.find((type) => type.id === typeFilter)?.name : t('common.type.type')}{' '}
             <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -104,7 +104,7 @@ export const HeaderContent = ({
               onClick={() => setTypeFilter(type.id)}
               className={typeFilter === type.id ? 'bg-accent' : ''}
             >
-              {t(`common.${type.name}`)}
+              {t(`common.type.${type.name}`)}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>

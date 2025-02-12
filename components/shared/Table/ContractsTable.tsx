@@ -148,7 +148,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full sm:w-auto">
-                    {t('common.status')} <ChevronDown className="ml-2 h-4 w-4" />
+                    {t('common.status.status')} <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -157,7 +157,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
                   </DropdownMenuItem>
                   {status.map((s) => (
                     <DropdownMenuItem key={s.id} onClick={() => setStatusFilter(s.id)}>
-                      {t(`common.${s.name}`)}
+                      {t(`common.status.${s.name}`)}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -165,7 +165,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full sm:w-auto">
-                    {t('common.type')} <ChevronDown className="ml-2 h-4 w-4" />
+                    {t('common.type.type')} <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -174,7 +174,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
                   </DropdownMenuItem>
                   {type.map((type) => (
                     <DropdownMenuItem key={type.id} onClick={() => setTypeFilter(type.id)}>
-                      {t(`common.${type.name}`)}
+                      {t(`common.type.${type.name}`)}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>

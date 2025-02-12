@@ -86,7 +86,7 @@ export const getColumns = ({
     },
     {
       accessorKey: 'status',
-      header: t('common.status'),
+      header: t('common.status.status'),
       cell: ({ row }) => {
         const statusId = row.getValue('status') as number;
         const styleClass = getStatusStyle(statusId);
@@ -98,17 +98,17 @@ export const getColumns = ({
               color: styleClass.color
             }}
           >
-            {t(`common.${getStatusName(status, statusId)}`)}
+            {t(`common.status.${getStatusName(status, statusId)}`)}
           </span>
         );
       }
     },
     {
       accessorKey: 'type',
-      header: t('common.type'),
+      header: t('common.type.type'),
       cell: ({ row }) => {
         const typeId = row.getValue('type') as number;
-        return t(`common.${getTypeName(type, typeId)}`);
+        return t(`common.type.${getTypeName(type, typeId)}`);
       }
     },
     {
