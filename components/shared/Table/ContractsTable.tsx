@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -31,6 +31,7 @@ import {
 } from '@tanstack/react-table';
 import { getColumns } from './TableConfig';
 import ContractDialog from '../ContractDialog';
+import { useTranslation } from 'react-i18next';
 
 interface ContractsTableProps {
   onEditAction?: (contract: ContractWithId | Contract) => void;
@@ -55,7 +56,9 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
   const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const [contractToEdit, setContractToEdit] = React.useState<ContractWithId | undefined>();
 
-  React.useEffect(() => {
+  const { t } = useTranslation();
+
+  useEffect(() => {
     if (initialFilter) {
       switch (initialFilter) {
         case 'activeContracts':
@@ -78,19 +81,20 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
         type,
         onEdit: onEditAction,
         onDelete: onDeleteAction,
-        noActions
+        noActions,
+        t
       }),
-    [status, type, onEditAction, onDeleteAction, noActions]
+    [status, type, onEditAction, onDeleteAction, noActions, t]
   );
 
   const filteredData = React.useMemo(() => {
     const filtered = contracts.filter((contract) => {
-      const matchesStatus = statusFilter ? contract.status === statusFilter : true;
+      const matchesStatus = statusFilter
+        ? contract.status === statusFilter
+        : initialFilter === 'expiringSoon'
+          ? contract.status === 4
+          : true;
       const matchesType = typeFilter ? contract.type === typeFilter : true;
-
-      if (initialFilter === 'expiringSoon') {
-        return contract.status === 4;
-      }
 
       return matchesStatus && matchesType;
     });
@@ -108,7 +112,8 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
         setIsEditModalOpen(true);
       },
       onDelete: onDeleteAction,
-      noActions
+      noActions,
+      t
     }),
     state: {
       sorting,
@@ -133,7 +138,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
         <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center sm:gap-2">
           <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
             <Input
-              placeholder="Buscar contratos..."
+              placeholder={t('table.search')}
               className="w-full sm:w-64"
               type="search"
               value={globalFilter}
@@ -143,16 +148,16 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full sm:w-auto">
-                    Status <ChevronDown className="ml-2 h-4 w-4" />
+                    {t('common.status.status')} <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent sideOffset={4} className="z-[100]" forceMount>
                   <DropdownMenuItem onClick={() => setStatusFilter(undefined)}>
-                    Todos
+                    {t('common.all')}
                   </DropdownMenuItem>
                   {status.map((s) => (
                     <DropdownMenuItem key={s.id} onClick={() => setStatusFilter(s.id)}>
-                      {s.name}
+                      {t(`common.status.${s.name}`)}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -160,16 +165,16 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full sm:w-auto">
-                    Tipo <ChevronDown className="ml-2 h-4 w-4" />
+                    {t('common.type.type')} <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent sideOffset={4} className="z-[100]" forceMount>
                   <DropdownMenuItem onClick={() => setTypeFilter(undefined)}>
-                    Todos
+                    {t('common.all')}
                   </DropdownMenuItem>
-                  {type.map((t) => (
-                    <DropdownMenuItem key={t.id} onClick={() => setTypeFilter(t.id)}>
-                      {t.name}
+                  {type.map((type) => (
+                    <DropdownMenuItem key={type.id} onClick={() => setTypeFilter(type.id)}>
+                      {t(`common.type.${type.name}`)}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -183,7 +188,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
-              Anterior
+              {t('table.previous')}
             </Button>
             <Button
               variant="outline"
@@ -191,7 +196,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
-              Próximo
+              {t('table.next')}
             </Button>
           </div>
         </div>
@@ -243,7 +248,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
-                    Nenhum resultado encontrado.
+                    {t('table.noResults')}
                   </TableCell>
                 </TableRow>
               )}

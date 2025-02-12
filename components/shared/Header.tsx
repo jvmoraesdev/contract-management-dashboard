@@ -9,11 +9,12 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion';
+import { useTranslation } from 'react-i18next';
 
 export const Header = ({ children }: ChildrenProps) => {
   const { toggleSidebar } = useSidebar();
   const { isMobile } = useMobile();
-
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-between xl:flex-row">
       <div className="flex w-full items-center justify-between xl:w-auto">
@@ -24,15 +25,13 @@ export const Header = ({ children }: ChildrenProps) => {
           <Menu className="h-6 w-6" />
         </button>
 
-        <h1 className="text-2xl font-bold">
-          {`${isMobile ? 'C. M. ' : 'Contract Management '}Dashboard`}
-        </h1>
+        <h1 className="text-2xl font-bold">{`${isMobile ? t('shortTitle') : t('title')}`}</h1>
       </div>
 
       {isMobile ? (
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="filters">
-            <AccordionTrigger className="py-2">Mais Opções</AccordionTrigger>
+            <AccordionTrigger className="py-2">{t('header.moreOptions')}</AccordionTrigger>
             <AccordionContent>{children}</AccordionContent>
           </AccordionItem>
         </Accordion>

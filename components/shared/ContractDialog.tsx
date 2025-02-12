@@ -28,6 +28,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 interface ContractDialogProps {
   open?: boolean;
@@ -37,17 +38,6 @@ interface ContractDialogProps {
   viewOnly?: boolean;
   showTrigger?: boolean;
 }
-
-const formSchema = z.object({
-  id: z.string().optional(),
-  name: z.string().min(1, 'Nome do contrato é obrigatório'),
-  type: z.number().min(0, 'Tipo de contrato é obrigatório'),
-  startDate: z.date(),
-  endDate: z.date(),
-  value: z.number().min(0.01, 'Valor do contrato é obrigatório'),
-  status: z.number().min(0, 'Status é obrigatório'),
-  clientOrSupplier: z.string().min(1, 'Cliente/Fornecedor é obrigatório')
-});
 
 const ContractDialog: React.FC<ContractDialogProps> = ({
   open = false,
@@ -59,6 +49,19 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
 }) => {
   const { status, type } = useContracts();
   const isEditing = !!contract;
+
+  const { t } = useTranslation();
+
+  const formSchema = z.object({
+    id: z.string().optional(),
+    name: z.string().min(1, t('contractDialog.fields.name.error')),
+    type: z.number().min(0, t('contractDialog.fields.type.error')),
+    startDate: z.date(),
+    endDate: z.date(),
+    value: z.number().min(0.01, t('contractDialog.fields.value.error')),
+    status: z.number().min(0, t('contractDialog.fields.status.error')),
+    clientOrSupplier: z.string().min(1, t('contractDialog.fields.clientOrSupplier.error'))
+  });
 
   const form = useForm<Contract | ContractWithId>({
     resolver: zodResolver(formSchema),
@@ -113,7 +116,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
       {showTrigger && (
         <DialogTrigger asChild>
           <Button variant="outline">
-            <Plus strokeWidth="3px" /> Adicionar Contrato
+            <Plus strokeWidth="3px" /> {t('contractDialog.add')}
           </Button>
         </DialogTrigger>
       )}
@@ -121,10 +124,10 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
         <DialogHeader className="p-6 pb-0">
           <DialogTitle>
             {viewOnly
-              ? 'Visualizar Contrato'
+              ? t('contractDialog.view')
               : isEditing
-                ? 'Editar Contrato'
-                : 'Adicionar Contrato'}
+                ? t('contractDialog.edit')
+                : t('contractDialog.add')}
           </DialogTitle>
         </DialogHeader>
         <form
@@ -140,10 +143,10 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
             )}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Nome do Contrato</Label>
+                <Label htmlFor="name">{t('contractDialog.fields.name.label')}</Label>
                 <Input
                   id="name"
-                  placeholder="Digite o nome do contrato"
+                  placeholder={t('contractDialog.fields.name.placeholder')}
                   {...form.register('name')}
                   disabled={viewOnly}
                   className={cn(
@@ -157,7 +160,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                 )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="type">Tipo de Contrato</Label>
+                <Label htmlFor="type">{t('contractDialog.fields.type.label')}</Label>
                 <Select
                   value={watchedType?.toString()}
                   onValueChange={(value) =>
@@ -172,7 +175,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                       viewOnly && 'bg-muted-foreground'
                     )}
                   >
-                    <SelectValue placeholder="Selecione o tipo" />
+                    <SelectValue placeholder={t('contractDialog.fields.type.placeholder')} />
                   </SelectTrigger>
                   <SelectContent>
                     {type.map((selectedType) => (
@@ -189,7 +192,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label>Período do Contrato</Label>
+              <Label>{t('contractDialog.fields.period.label')}</Label>
               <DatePickerWithRange
                 from={form.watch('startDate')}
                 to={form.watch('endDate')}
@@ -207,15 +210,17 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                 className={cn('rounded-md', viewOnly && 'bg-muted-foreground')}
               />
               {(form.formState.errors.startDate || form.formState.errors.endDate) && (
-                <p className="text-sm text-destructive">Data inválida</p>
+                <p className="text-sm text-destructive">
+                  {t('contractDialog.fields.period.error')}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="value">Valor do Contrato (R$)</Label>
+              <Label htmlFor="value">{t('contractDialog.fields.value.label')} (R$)</Label>
               <Input
                 id="value"
-                placeholder="Digite o valor do contrato"
+                placeholder={t('contractDialog.fields.value.placeholder')}
                 type="number"
                 {...form.register('value', { valueAsNumber: true })}
                 disabled={viewOnly}
@@ -231,10 +236,12 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="clientOrSupplier">Cliente/Fornecedor</Label>
+              <Label htmlFor="clientOrSupplier">
+                {t('contractDialog.fields.clientOrSupplier.label')}
+              </Label>
               <Input
                 id="clientOrSupplier"
-                placeholder="Digite o nome do cliente ou fornecedor"
+                placeholder={t('contractDialog.fields.clientOrSupplier.placeholder')}
                 {...form.register('clientOrSupplier')}
                 disabled={viewOnly}
                 className={cn(
@@ -251,7 +258,7 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
+              <Label htmlFor="status">{t('contractDialog.fields.status.label')}</Label>
               <Select
                 value={watchedStatus?.toString()}
                 onValueChange={(value) =>
@@ -266,12 +273,12 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
                     viewOnly && 'bg-muted-foreground'
                   )}
                 >
-                  <SelectValue placeholder="Selecione o status" />
+                  <SelectValue placeholder={t('contractDialog.fields.status.placeholder')} />
                 </SelectTrigger>
                 <SelectContent>
                   {status.map((selectedStatus) => (
                     <SelectItem key={selectedStatus.id} value={selectedStatus.id.toString()}>
-                      {selectedStatus.name}
+                      {t(`common.status.${selectedStatus.name}`)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -284,15 +291,15 @@ const ContractDialog: React.FC<ContractDialogProps> = ({
           <DialogFooter className="p-6 pt-0">
             {viewOnly ? (
               <Button type="button" onClick={() => onOpenChange(false)}>
-                Fechar
+                {t('contractDialog.close')}
               </Button>
             ) : (
               <>
                 <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                  Cancelar
+                  {t('contractDialog.cancel')}
                 </Button>
                 <Button type="submit">
-                  {isEditing ? 'Salvar Alterações' : 'Adicionar Contrato'}
+                  {isEditing ? t('contractDialog.saveChanges') : t('contractDialog.add')}
                 </Button>
               </>
             )}

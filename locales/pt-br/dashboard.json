@@ -1,0 +1,149 @@
+{
+  "title": "Painel de Gestão de Contratos",
+  "shortTitle": "Painel GC",
+  "description": "Um painel para gerenciar contratos",
+  "common": {
+    "contracts": "Contratos",
+    "dashboard": "Painel",
+    "users": "Usuários",
+    "settings": "Configurações",
+    "loading": "Carregando...",
+    "all": "Todos",
+    "status": {
+      "status": "Status",
+      "Ativo": "Ativo",
+      "Expirado": "Expirado",
+      "Pendente de Renovação": "Pendente de Renovação",
+      "Próximo ao Vencimento": "Próximo ao Vencimento"
+    },
+    "type": {
+      "type": "Tipo",
+      "TI": "TI",
+      "Serviço": "Serviço",
+      "Fornecimento": "Fornecimento",
+      "Consultoria": "Consultoria"
+    },
+    "months": {
+      "jan": "Janeiro",
+      "feb": "Fevereiro",
+      "mar": "Março",
+      "apr": "Abril",
+      "may": "Maio",
+      "jun": "Junho",
+      "jul": "Julho",
+      "aug": "Agosto",
+      "sep": "Setembro",
+      "oct": "Outubro",
+      "nov": "Novembro",
+      "dec": "Dezembro"
+    }
+  },
+  "sidebar": {
+    "hide": "Esconder",
+    "language": "Idioma",
+    "theme": "Tema de cores"
+  },
+  "themes": {
+    "light": "Claro",
+    "dark": "Escuro",
+    "default": "Padrão",
+    "ruby": "Rubi",
+    "sapphire": "Safira",
+    "emerald": "Esmeralda"
+  },
+  "table": {
+    "search": "Buscar contratos...",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "noResults": "Nenhum resultado encontrado.",
+    "columns": {
+      "id": "ID",
+      "name": "Nome do Contrato",
+      "company": "Empresa",
+      "value": "Valor",
+      "startDate": "Data Início",
+      "endDate": "Data Fim"
+    }
+  },
+  "actions": {
+    "edit": "Editar",
+    "delete": "Excluir",
+    "clearFilters": "Limpar filtros"
+  },
+  "header": {
+    "filters": "Filtros",
+    "moreOptions": "Mais Opções"
+  },
+  "filters": {
+    "totalContracts": "Total de Contratos",
+    "activeContracts": "Contratos Ativos",
+    "expiringSoon": "Vencendo em Breve",
+    "value": "Por Valor"
+  },
+  "contractDialog": {
+    "add": "Adicionar Contrato",
+    "edit": "Editar Contrato",
+    "view": "Visualizar Contrato",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "saveChanges": "Salvar Alterações",
+    "fields": {
+      "id": "ID do Contrato",
+      "name": {
+        "label": "Nome do Contrato",
+        "placeholder": "Digite o nome do contrato",
+        "error": "Nome do contrato é obrigatório"
+      },
+      "type": {
+        "label": "Tipo de Contrato",
+        "placeholder": "Selecione o tipo",
+        "error": "Tipo de contrato é obrigatório"
+      },
+      "period": {
+        "label": "Período do Contrato",
+        "error": "Data inválida"
+      },
+      "value": {
+        "label": "Valor do Contrato",
+        "placeholder": "Digite o valor do contrato",
+        "error": "Valor do contrato é obrigatório"
+      },
+      "company": {
+        "label": "Cliente/Fornecedor",
+        "placeholder": "Digite o nome do cliente ou fornecedor",
+        "error": "Cliente/Fornecedor é obrigatório"
+      },
+      "clientOrSupplier": {
+        "label": "Cliente/Fornecedor",
+        "placeholder": "Digite o nome do cliente ou fornecedor",
+        "error": "Cliente/Fornecedor é obrigatório"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Selecione o status",
+        "error": "Status é obrigatório"
+      }
+    }
+  },
+  "alertDialog": {
+    "delete": {
+      "title": "Excluir Contrato",
+      "description": "Tem certeza que deseja excluir este contrato? Esta ação não pode ser desfeita.",
+      "confirm": "Sim, excluir",
+      "cancel": "Não, cancelar"
+    }
+  },
+  "metrics": {
+    "title": "Métricas",
+    "totalContracts": "Total de Contratos",
+    "activeContracts": "Contratos Ativos",
+    "expiringSoon": "Vencendo em Breve",
+    "value": "Valor Total"
+  },
+  "charts": {
+    "expiration": "Vencendo",
+    "distribution": "Distribuição",
+    "timeline": "Linha do Tempo de Expiração de Contratos",
+    "distributionBy": "Distribuição por"
+  }
+}

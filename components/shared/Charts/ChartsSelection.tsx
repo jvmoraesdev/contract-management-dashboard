@@ -11,8 +11,11 @@ import {
 import { ChartData } from '@/interfaces/chats.interface';
 import { ContractStatusChart } from './ContractStatusChart';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useTranslation } from 'react-i18next';
 
 export default function ChartsSection(): React.ReactElement {
+  const { t } = useTranslation('');
+
   const { contracts, status, type } = useContracts();
   const [expirationDate, setExpirationDate] = useState<ChartData[]>([]);
   const [statusData, setStatusData] = useState<ChartData[]>([]);
@@ -29,13 +32,13 @@ export default function ChartsSection(): React.ReactElement {
       <div className="md:hidden">
         <Tabs defaultValue="expiration" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="expiration">Timeline</TabsTrigger>
-            <TabsTrigger value="status">Status</TabsTrigger>
+            <TabsTrigger value="expiration">{t('charts.expiration')}</TabsTrigger>
+            <TabsTrigger value="distribution">{t('charts.distribution')}</TabsTrigger>
           </TabsList>
           <TabsContent value="expiration">
             <ContractExpirationChart barsChartData={expirationDate} />
           </TabsContent>
-          <TabsContent value="status">
+          <TabsContent value="distribution">
             <ContractStatusChart statusData={statusData} typeData={typeData} />
           </TabsContent>
         </Tabs>

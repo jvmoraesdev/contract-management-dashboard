@@ -1,0 +1,149 @@
+{
+  "title": "Contract Management Dashboard",
+  "shortTitle": "CM Dashboard",
+  "description": "A dashboard to manage contracts",
+  "common": {
+    "contracts": "Contracts",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "settings": "Settings",
+    "loading": "Loading...",
+    "all": "All",
+    "status": {
+      "status": "Status",
+      "Ativo": "Active",
+      "Expirado": "Expired",
+      "Pendente de Renovação": "Pending Renewal",
+      "Próximo ao Vencimento": "Expiring Soon"
+    },
+    "type": {
+      "type": "Type",
+      "TI": "IT",
+      "Serviço": "Service",
+      "Fornecimento": "Supply",
+      "Consultoria": "Consulting"
+    },
+    "months": {
+      "jan": "January",
+      "feb": "February",
+      "mar": "March",
+      "apr": "April",
+      "may": "May",
+      "jun": "June",
+      "jul": "July",
+      "aug": "August",
+      "sep": "September",
+      "oct": "October",
+      "nov": "November",
+      "dec": "December"
+    }
+  },
+  "sidebar": {
+    "hide": "Hide",
+    "language": "Language",
+    "theme": "Color Theme"
+  },
+  "themes": {
+    "light": "Light",
+    "dark": "Dark",
+    "default": "Default",
+    "ruby": "Ruby",
+    "sapphire": "Sapphire",
+    "emerald": "Emerald"
+  },
+  "table": {
+    "search": "Search contracts...",
+    "previous": "Previous",
+    "next": "Next",
+    "noResults": "No results found.",
+    "columns": {
+      "id": "ID",
+      "name": "Contract Name",
+      "company": "Company",
+      "value": "Value",
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    }
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "clearFilters": "Clear filters"
+  },
+  "header": {
+    "filters": "Filters",
+    "moreOptions": "More Options"
+  },
+  "filters": {
+    "totalContracts": "Total Contracts",
+    "activeContracts": "Active Contracts",
+    "expiringSoon": "Expiring Soon",
+    "value": "By Value"
+  },
+  "contractDialog": {
+    "add": "Add Contract",
+    "edit": "Edit Contract",
+    "view": "View Contract",
+    "cancel": "Cancel",
+    "close": "Close",
+    "saveChanges": "Save Changes",
+    "fields": {
+      "id": "Contract ID",
+      "name": {
+        "label": "Contract Name",
+        "placeholder": "Enter contract name",
+        "error": "Contract name is required"
+      },
+      "type": {
+        "label": "Contract Type",
+        "placeholder": "Select type",
+        "error": "Contract type is required"
+      },
+      "period": {
+        "label": "Contract Period",
+        "error": "Invalid date"
+      },
+      "value": {
+        "label": "Contract Value",
+        "placeholder": "Enter contract value",
+        "error": "Contract value is required"
+      },
+      "company": {
+        "label": "Client/Supplier",
+        "placeholder": "Enter client or supplier name",
+        "error": "Client/Supplier is required"
+      },
+      "clientOrSupplier": {
+        "label": "Client/Supplier",
+        "placeholder": "Enter client or supplier name",
+        "error": "Client/Supplier is required"
+      },
+      "status": {
+        "label": "Status",
+        "placeholder": "Select status",
+        "error": "Status is required"
+      }
+    }
+  },
+  "alertDialog": {
+    "delete": {
+      "title": "Delete Contract",
+      "description": "Are you sure you want to delete this contract? This action cannot be undone.",
+      "confirm": "Yes, delete",
+      "cancel": "No, cancel"
+    }
+  },
+  "metrics": {
+    "title": "Metrics",
+    "totalContracts": "Total Contracts",
+    "activeContracts": "Active Contracts",
+    "expiringSoon": "Expiring Soon",
+    "value": "Total Value"
+  },
+  "charts": {
+    "expiration": "Expiring",
+    "distribution": "Distribution",
+    "timeline": "Contract Expiration Timeline",
+    "distributionBy": "Distribution by"
+  }
+}

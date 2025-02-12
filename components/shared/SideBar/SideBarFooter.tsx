@@ -12,38 +12,57 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuButton
+  useSidebar
 } from '@/components/ui/sidebar';
-import { Switch } from '@/components/ui/switch';
-import { ThemeColors } from '@/interfaces/theme.interface';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ThemeColors, ThemeMode } from '@/interfaces/theme.interface';
 import { themes } from '@/lib/theme-colors';
 import useMounted from '@/stores/hooks/useMounted';
 import useThemes from '@/stores/hooks/useThemes';
 import { Moon, Sun } from 'lucide-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SideBarFooter = () => {
   const isMounted = useMounted();
   const { themeColor, themeMode, setThemeColor, setThemeMode } = useThemes();
+  const { t, i18n } = useTranslation();
+  const { open: isSidebarOpen } = useSidebar();
 
+  console.log(isSidebarOpen);
   return (
-    <Footer>
-      <SidebarGroupLabel>Theme</SidebarGroupLabel>
+    <Footer className={isSidebarOpen ? 'block' : 'hidden'}>
+      <SidebarGroupLabel>{t('sidebar.language')}</SidebarGroupLabel>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <Tabs defaultValue={i18n.language} onValueChange={(value) => i18n.changeLanguage(value)}>
+            <TabsList>
+              <TabsTrigger value="ptBr">🇧🇷</TabsTrigger>
+              <TabsTrigger value="en">🇬🇧</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </SidebarMenuItem>
+      </SidebarMenu>
+
+      <SidebarGroupLabel>{t('sidebar.theme')}</SidebarGroupLabel>
 
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton asChild>
-            {isMounted && (
-              <div className="flex items-center justify-start gap-5">
-                <Sun className="h-4 w-4" />
-                <Switch
-                  checked={themeMode === 'dark'}
-                  onCheckedChange={() => setThemeMode(themeMode === 'dark' ? 'light' : 'dark')}
-                />
-                <Moon className="h-4 w-4" />
-              </div>
-            )}
-          </SidebarMenuButton>
+          {isMounted && (
+            <Tabs
+              defaultValue={themeMode}
+              onValueChange={(value) => setThemeMode(value as ThemeMode)}
+            >
+              <TabsList>
+                <TabsTrigger value="light">
+                  <Sun className="h-4 w-4" />
+                </TabsTrigger>
+                <TabsTrigger value="dark">
+                  <Moon className="h-4 w-4" />
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          )}
         </SidebarMenuItem>
 
         <SidebarMenuItem>
@@ -64,7 +83,7 @@ const SideBarFooter = () => {
                         backgroundColor: `hsl(${themes[theme as keyof typeof themes][themeMode]['primary']})`
                       }}
                     />
-                    {theme}
+                    {t(`themes.${theme}`)}
                   </div>
                 </SelectItem>
               ))}

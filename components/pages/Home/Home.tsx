@@ -20,8 +20,11 @@ import { addYears, subYears } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { HeaderContent } from './HeaderContent';
 import { SideBar } from '@/components/shared/SideBar/SideBar';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+  const { t } = useTranslation();
+
   const getDefaultDateRange = () => {
     const today = new Date();
     return {
@@ -155,8 +158,8 @@ const Home = () => {
           <ChartsSection />
 
           <ContractsTable
-            onEditAction={(contract) => {
-              setSelectedContract(contract);
+            onEditAction={(contract: Contract | ContractWithId) => {
+              setSelectedContract(contract as ContractWithId);
               setShowAddContract(true);
             }}
             onDeleteAction={(id) => handleDeleteContract(id)}
@@ -165,10 +168,10 @@ const Home = () => {
       </main>
 
       <AlertDialogModal
-        title="Confirmar Exclusão"
-        description="Tem certeza que deseja excluir este contrato? Esta ação não pode ser desfeita."
-        trueLabel="Sim"
-        falseLabel="Não"
+        title={t('alertDialog.delete.title')}
+        description={t('alertDialog.delete.description')}
+        trueLabel={t('alertDialog.delete.confirm')}
+        falseLabel={t('alertDialog.delete.cancel')}
         open={showDeleteDialog}
         onOpenChange={setShowDeleteDialog}
         onConfirm={handleConfirmDelete}

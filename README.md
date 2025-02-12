@@ -169,6 +169,7 @@ Access: http://localhost:3000
 - Facilitation in writing tests;
 - More consistent documentation;
 - Faster bug resolution;
+- Assisted in identifying texts and then helped formulate locales and translation keys.
 
 ## Challenges and Solutions
 
@@ -193,7 +194,6 @@ Access: http://localhost:3000
 ## Next Steps
 
 - Increase test coverage
-- Add internationalization library
 - Integrate with real APIs
 - Add user feedback via toast notifications
 - Add the loading screen for API calls

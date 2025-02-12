@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { format } from 'date-fns';
+import { ptBR, enUS } from 'date-fns/locale';
 import { CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 
@@ -10,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import useMounted from '@/stores/hooks/useMounted';
+import { useTranslation } from 'react-i18next';
 
 interface DatePickerWithRangeProps {
   from: Date;
@@ -32,6 +34,12 @@ const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
 }) => {
   const isMounted = useMounted();
   const [date, setDate] = React.useState<DateRange | undefined>();
+  const { t, i18n } = useTranslation();
+
+  const locales = {
+    ptBr: ptBR,
+    en: enUS
+  };
 
   // Atualiza o estado local quando as props mudam
   React.useEffect(() => {
@@ -50,7 +58,7 @@ const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
         className={cn('w-full justify-start text-left font-normal', 'text-muted-foreground')}
       >
         <CalendarIcon className="mr-2 h-4 w-4" />
-        <span>Carregando...</span>
+        <span>{t('common.loading')}</span>
       </Button>
     );
   }
@@ -75,13 +83,21 @@ const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, 'dd/MM/yyyy')} - {format(date.to, 'dd/MM/yyyy')}
+                  {format(date.from, 'dd/MM/yyyy', {
+                    locale: locales[i18n.language as keyof typeof locales]
+                  })}{' '}
+                  -{' '}
+                  {format(date.to, 'dd/MM/yyyy', {
+                    locale: locales[i18n.language as keyof typeof locales]
+                  })}
                 </>
               ) : (
-                format(date.from, 'dd/MM/yyyy')
+                format(date.from, 'dd/MM/yyyy', {
+                  locale: locales[i18n.language as keyof typeof locales]
+                })
               )
             ) : (
-              <span>Selecione um período</span>
+              <span>{t('contractDialog.fields.period.label')}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -103,6 +119,7 @@ const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({
             }}
             numberOfMonths={2}
             disabled={disabled}
+            locale={locales[i18n.language as keyof typeof locales]}
           />
         </PopoverContent>
       </Popover>

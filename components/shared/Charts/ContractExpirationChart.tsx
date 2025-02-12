@@ -6,60 +6,59 @@ import { ChartCardContainer } from './ChartCardContainer';
 import React from 'react';
 import { ChartDataProps } from '@/interfaces/chats.interface';
 import useMobile from '@/stores/hooks/useMobile';
-
-const barsChartConfig = {
-  contracts: {
-    label: 'Contratos'
-  },
-  Jan: {
-    label: 'Janeiro'
-  },
-  Feb: {
-    label: 'Fevereiro'
-  },
-  Mar: {
-    label: 'Março'
-  },
-  Apr: {
-    label: 'Abril'
-  },
-  May: {
-    label: 'Maio'
-  },
-  Jun: {
-    label: 'Junho'
-  },
-  Jul: {
-    label: 'Julho'
-  },
-  Aug: {
-    label: 'Agosto'
-  },
-  Sep: {
-    label: 'Setembro'
-  },
-  Oct: {
-    label: 'Outubro'
-  },
-  Nov: {
-    label: 'Novembro'
-  },
-  Dec: {
-    label: 'Dezembro'
-  }
-} satisfies ChartConfig;
+import { useTranslation } from 'react-i18next';
 
 export const ContractExpirationChart: React.FC<ChartDataProps> = ({ barsChartData }) => {
+  const { t } = useTranslation('');
   const { isMobile } = useMobile();
   if (!barsChartData) return null;
+
+  const barsChartConfig = {
+    contracts: {
+      label: t('common.contracts')
+    },
+    Jan: {
+      label: t('common.months.jan')
+    },
+    Feb: {
+      label: t('common.months.feb')
+    },
+    Mar: {
+      label: t('common.months.mar')
+    },
+    Apr: {
+      label: t('common.months.apr')
+    },
+    May: {
+      label: t('common.months.may')
+    },
+    Jun: {
+      label: t('common.months.jun')
+    },
+    Jul: {
+      label: t('common.months.jul')
+    },
+    Aug: {
+      label: t('common.months.aug')
+    },
+    Sep: {
+      label: t('common.months.sep')
+    },
+    Oct: {
+      label: t('common.months.oct')
+    },
+    Nov: {
+      label: t('common.months.nov')
+    },
+    Dec: {
+      label: t('common.months.dec')
+    }
+  } satisfies ChartConfig;
 
   const displayData = isMobile ? barsChartData.slice(0, 6) : barsChartData;
 
   return (
-    <ChartCardContainer
-      title="Linha do Tempo de Expiração de Contratos"
-      labelConfig={barsChartConfig}
-    >
+    <ChartCardContainer title={t('charts.timeline')} labelConfig={barsChartConfig}>
       <BarChart
         accessibilityLayer
         data={displayData}

@@ -19,6 +19,7 @@ interface TableConfigProps {
   onEdit: (contract: ContractWithId) => void;
   onDelete: (id: string) => void;
   noActions?: boolean;
+  t: (key: string) => string;
 }
 
 export const getColumns = ({
@@ -26,7 +27,8 @@ export const getColumns = ({
   type,
   onEdit,
   onDelete,
-  noActions
+  noActions,
+  t
 }: TableConfigProps): ColumnDef<ContractWithId>[] => {
   return [
     {
@@ -38,7 +40,7 @@ export const getColumns = ({
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
             className="w-full justify-center"
           >
-            ID
+            {t('table.columns.id')}
             {{
               asc: <ChevronUp className="ml-2 h-4 w-4" />,
               desc: <ChevronDown className="ml-2 h-4 w-4" />
@@ -56,7 +58,7 @@ export const getColumns = ({
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Nome do Contrato
+            {t('table.columns.name')}
             {{
               asc: <ChevronUp className="ml-2 h-4 w-4" />,
               desc: <ChevronDown className="ml-2 h-4 w-4" />
@@ -73,7 +75,7 @@ export const getColumns = ({
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Empresa
+            {t('table.columns.company')}
             {{
               asc: <ChevronUp className="ml-2 h-4 w-4" />,
               desc: <ChevronDown className="ml-2 h-4 w-4" />
@@ -84,7 +86,7 @@ export const getColumns = ({
     },
     {
       accessorKey: 'status',
-      header: 'Status',
+      header: t('common.status.status'),
       cell: ({ row }) => {
         const statusId = row.getValue('status') as number;
         const styleClass = getStatusStyle(statusId);
@@ -96,17 +98,17 @@ export const getColumns = ({
               color: styleClass.color
             }}
           >
-            {getStatusName(status, statusId)}
+            {t(`common.status.${getStatusName(status, statusId)}`)}
           </span>
         );
       }
     },
     {
       accessorKey: 'type',
-      header: 'Tipo',
+      header: t('common.type.type'),
       cell: ({ row }) => {
         const typeId = row.getValue('type') as number;
-        return getTypeName(type, typeId);
+        return t(`common.type.${getTypeName(type, typeId)}`);
       }
     },
     {
@@ -118,7 +120,7 @@ export const getColumns = ({
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
             className="w-full justify-center"
           >
-            Valor
+            {t('table.columns.value')}
             {{
               asc: <ChevronUp className="ml-2 h-4 w-4" />,
               desc: <ChevronDown className="ml-2 h-4 w-4" />
@@ -139,7 +141,7 @@ export const getColumns = ({
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
             className="w-full justify-center"
           >
-            Data Início
+            {t('table.columns.startDate')}
             {{
               asc: <ChevronUp className="ml-2 h-4 w-4" />,
               desc: <ChevronDown className="ml-2 h-4 w-4" />
@@ -160,7 +162,7 @@ export const getColumns = ({
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
             className="w-full justify-center"
           >
-            Data Fim
+            {t('table.columns.endDate')}
             {{
               asc: <ChevronUp className="ml-2 h-4 w-4" />,
               desc: <ChevronDown className="ml-2 h-4 w-4" />
@@ -187,13 +189,15 @@ export const getColumns = ({
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => onEdit(contract)}>Editar</DropdownMenuItem>
+              <DropdownMenuContent align="end" sideOffset={4} className="z-[100]" forceMount>
+                <DropdownMenuItem onClick={() => onEdit(contract)}>
+                  {t('actions.edit')}
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   className="text-destructive"
                   onClick={() => onDelete(contract.id.toString())}
                 >
-                  Excluir
+                  {t('actions.delete')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
