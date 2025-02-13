@@ -38,7 +38,7 @@ const SideBarFooter = () => {
           <Tabs defaultValue={i18n.language} onValueChange={(value) => i18n.changeLanguage(value)}>
             <TabsList>
               <TabsTrigger value="ptBr">🇧🇷</TabsTrigger>
-              <TabsTrigger value="en">🇬🇧</TabsTrigger>
+              <TabsTrigger value="en">🇺🇸</TabsTrigger>
             </TabsList>
           </Tabs>
         </SidebarMenuItem>
